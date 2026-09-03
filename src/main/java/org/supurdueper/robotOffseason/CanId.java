@@ -17,7 +17,11 @@ public enum CanId {
     CANCODER_STEER_FR(22, Constants.canivoreBus),
     CANCODER_STEER_BL(23, Constants.canivoreBus),
     CANCODER_STEER_BR(24, Constants.canivoreBus),
-    PIGEON(25, Constants.canivoreBus);
+    PIGEON(25, Constants.canivoreBus),
+
+    //Intake 
+    INTAKE_ONE(9,Constants.canivoreBus),
+    INTAKE_TWO(10,Constants.canivoreBus);
 
     private final int mDeviceNumber;
     private final CANBus mBus;

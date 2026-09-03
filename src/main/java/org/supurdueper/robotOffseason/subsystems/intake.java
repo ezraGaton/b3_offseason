@@ -6,6 +6,7 @@ package org.supurdueper.robotOffseason.subsystems;
 
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
+import org.supurdueper.robotOffseason.Constants;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -17,9 +18,9 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem{
-  /** Creates a new Shooter. */
-  public Shooter() {}
+public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
+  /** Creates a new Intake. */
+  public intake() {}
 
   @Override
   public void periodic() {
@@ -46,38 +47,32 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem{
 
   @Override
   public CanId canIdLeader() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdLeader'");
+    return CanId.INTAKE_ONE;
   }
 
   @Override
   public CanId canIdFollower() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
+    return CanId.INTAKE_TWO;
   }
 
   @Override
   public boolean followerInverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'followerInverted'");
+    return false;
   }
 
   @Override
   public CurrentLimitsConfigs currentLimits() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'currentLimits'");
+    return Constants.IntakeConstants.kCurrentLimits;
   }
 
   @Override
   public boolean inverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'inverted'");
+    return false;
   }
 
   @Override
   public boolean brakeMode() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'brakeMode'");
+    return false;
   }
 
   @Override

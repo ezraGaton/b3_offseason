@@ -43,6 +43,14 @@ public final class Constants {
         public static final double kTurboModeScalor = 1;
     }
 
+    public static final class IntakeConstants {
+        public static final double kMaxAmps = 50.0;
+        public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(kMaxAmps)
+            .withStatorCurrentLimitEnable(true);
+        
+    }
+
     public static boolean disableHAL = false;
 
     public static void disableHAL() {
