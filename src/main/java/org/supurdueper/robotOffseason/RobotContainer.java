@@ -9,6 +9,10 @@ import org.supurdueper.robotOffseason.commands.Autos;
 import org.supurdueper.robotOffseason.commands.ExampleCommand;
 import org.supurdueper.robotOffseason.state.Driver;
 import org.supurdueper.robotOffseason.subsystems.ExampleSubsystem;
+import org.supurdueper.robotOffseason.subsystems.Vision;
+import org.supurdueper.robotOffseason.subsystems.drive.Drivetrain;
+import org.supurdueper.robotOffseason.subsystems.drive.generated.TunerConstants;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -28,6 +32,13 @@ public class RobotContainer {
   @Getter
     private static Driver driver;
 
+  @Getter
+   private static Vision vision;
+
+  @Getter
+    private static Drivetrain drivetrain;
+
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
@@ -37,7 +48,8 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
+    vision = new Vision();
+    drivetrain = TunerConstants.createDrivetrain();
     configureBindings();
   }
 
