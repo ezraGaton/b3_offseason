@@ -29,14 +29,18 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
 
   @Override
   public Slot0Configs pidGains() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'pidGains'");
+    return new Slot0Configs()
+      .withKP(Constants.IntakeConstants.kP)
+      .withKI(Constants.IntakeConstants.kI)
+      .withKS(Constants.IntakeConstants.kS)
+      .withKV(Constants.IntakeConstants.kV)
+      .withKA(Constants.IntakeConstants.kA);
   }
 
   @Override
   public AngularVelocity velocityTolerance() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'velocityTolerance'");
+     // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
   }
 
   @Override
