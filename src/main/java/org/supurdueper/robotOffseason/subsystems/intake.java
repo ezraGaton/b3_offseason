@@ -99,7 +99,7 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
   }
 
   public Command runintake() {
-    return Commands.runEnd(this::runintake ,this::runBrake);
+    return Commands.runEnd(this::runFoward ,this::runBrake);
   }
 
   @Override
