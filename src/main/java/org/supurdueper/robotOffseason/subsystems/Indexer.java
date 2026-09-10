@@ -4,6 +4,8 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
 import java.rmi.server.RemoteStub;
 
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
@@ -15,6 +17,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -29,20 +32,22 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public Slot0Configs pidGains() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'pidGains'");
+    return new Slot0Configs()
+    .withKP(Constants.IndexerConstants.kP)
+    .withKS(Constants.IndexerConstants.kS)
+    .withKV(Constants.IndexerConstants.kV)
+    .withKI(Constants.IndexerConstants.kI)
+    .withKA(Constants.IndexerConstants.kA);
   }
 
   @Override
   public AngularVelocity velocityTolerance() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'velocityTolerance'");
+    return Constants.IndexerConstants.kTolerance;
   }
 
   @Override
   public SysIdRoutine sysIdConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
+    return null;
   }
 
   @Override
@@ -69,15 +74,21 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public boolean followerInverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'followerInverted'");
+    return false;
   }
 
   @Override
   public CanId canIdFollower() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
+    return null;
   }
+
+  public void runIndexer() {
+    setVelocity(Constants.IndexerConstants.kFowardVelocity);
+  }
+  public void runIndexerBreak() {
+    setVelocity(RotationsPerSecond.of(0));
+  }
+  
 
     @Override
   public void bindCommands() {

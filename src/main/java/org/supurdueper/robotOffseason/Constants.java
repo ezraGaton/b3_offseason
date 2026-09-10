@@ -64,8 +64,15 @@ public final class Constants {
     public static final class IndexerConstants {
         public static final double kMaxAmps = 50.0;
         public static final CurrentLimitsConfigs kCurrentLimitsIndexer = new CurrentLimitsConfigs()
-        .withStatorCurrentLimit(kMaxAmps)
-        .withStatorCurrentLimitEnable(true);
+            .withStatorCurrentLimit(kMaxAmps)
+            .withStatorCurrentLimitEnable(true);
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+        public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
+        public static final AngularVelocity kFowardVelocity = RotationsPerSecond.of(0);
 
 
     }
