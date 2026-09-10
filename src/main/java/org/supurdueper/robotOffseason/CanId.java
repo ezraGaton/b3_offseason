@@ -21,7 +21,12 @@ public enum CanId {
 
     //Intake 
     INTAKE_ONE(9,Constants.canivoreBus),
-    INTAKE_TWO(10,Constants.canivoreBus);
+    INTAKE_TWO(10,Constants.canivoreBus),
+
+    //Indexer
+    INDEXER_ONE(11,Constants.canivoreBus),
+    //Roller floor
+    ROLLER_FLOOR_ONE(12,Constants.canivoreBus);
 
     private final int mDeviceNumber;
     private final CANBus mBus;
