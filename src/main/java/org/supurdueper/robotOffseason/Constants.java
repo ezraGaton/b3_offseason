@@ -17,7 +17,6 @@ import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Voltage;
 import org.supurdueper.lib.utils.ExpCurve;
-import org.supurdueper.robotOffseason.subsystems.Rollerfloor;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -72,6 +71,28 @@ public final class Constants {
     }
 
     public static final class RollerFloorConstants {
+
+        public static final double kMaxAmps = 50.0;
+
+        public static final CurrentLimitsConfigs kCurrentLimits =  new CurrentLimitsConfigs()
+        .withStatorCurrentLimit(kMaxAmps)
+        .withStatorCurrentLimitEnable(true);
+
+        public static final double kP = 0;
+
+        public static final double kI = 0;
+
+        public static final double kS = 0;
+
+        public static final double kA = 0;
+
+        public static final double kV = 0;
+
+        public static final double kTolerance = 0;
+
+        public static final AngularVelocity kSlowSpeed = null;
+
+        public static final AngularVelocity kFastSpeed = null;;
 
 
     }

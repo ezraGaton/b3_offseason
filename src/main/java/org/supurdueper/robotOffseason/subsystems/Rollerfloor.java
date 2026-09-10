@@ -4,83 +4,100 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
+import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
+import edu.wpi.first.units.AngularVelocityUnit;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public class Rollerfloor extends VelocitySubsystem implements SupurdueperSubsystem {
-  /** Creates a new Rollerfloor. */
-  public Rollerfloor() {}
+public class RollerFloor extends VelocitySubsystem implements SupurdueperSubsystem {
+  /** Creates a new RollerFloor. */
+  public RollerFloor() {}
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    super.periodic();
   }
 
   @Override
   public void bindCommands() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
+    RobotStates.actionIntake.whileTrue(runIntake());
   }
 
+  public void runSlow(){
+    setVelocity(Constants.RollerFloorConstants.kSlowSpeed);
+  }
+
+  public void runFast(){
+    setVelocity(Constants.RollerFloorConstants.kFastSpeed);
+  }
+
+  public void runStop(){
+    setVelocity(0);
+  }
+
+  public Command runIntake(){
+    return Commands.runEnd(this::runSlow,this::runStop);
+  }
   @Override
   public Slot0Configs pidGains() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'pidGains'");
+     return new Slot0Configs()
+      .withKP(Constants.RollerFloorConstants.kP)
+      .withKI(Constants.RollerFloorConstants.kI)
+      .withKS(Constants.RollerFloorConstants.kS)
+      .withKV(Constants.RollerFloorConstants.kV)
+      .withKA(Constants.RollerFloorConstants.kA);
   }
 
   @Override
   public AngularVelocity velocityTolerance() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'velocityTolerance'");
+    return RotationsPerSecond.of(Constants.RollerFloorConstants.kTolerance);
   }
 
   @Override
   public SysIdRoutine sysIdConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
+   return null;
   }
 
   @Override
   public CanId canIdLeader() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdLeader'");
+   return CanId.ROLLER_FLOOR_ONE;
   }
 
   @Override
   public CanId canIdFollower() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
+    return null;
   }
 
   @Override
   public boolean followerInverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'followerInverted'");
+    return false;
   }
 
   @Override
   public CurrentLimitsConfigs currentLimits() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'currentLimits'");
+    return Constants.RollerFloorConstants.kCurrentLimits;
   }
 
   @Override
   public boolean inverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'inverted'");
+   return false;
   }
 
   @Override
   public boolean brakeMode() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'brakeMode'");
+   return false;
   }
 }
