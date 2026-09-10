@@ -4,9 +4,12 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
+import java.rmi.server.RemoteStub;
+
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
+import org.supurdueper.robotOffseason.Constants;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -21,13 +24,7 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  @Override
-  public void bindCommands() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
+    super.periodic();
   }
 
   @Override
@@ -50,14 +47,25 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public CanId canIdLeader() {
-  return CanId.INDEXER_ONE;
+    return CanId.INDEXER_ONE;
   }
 
   @Override
-  public CanId canIdFollower() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
+  public CurrentLimitsConfigs currentLimits() {
+    return Constants.IndexerConstants.kCurrentLimitsIndexer;
   }
+
+  @Override
+  public boolean inverted() {
+    return false;
+  }
+
+  @Override
+  public boolean brakeMode() {
+    return false;
+  }
+
+
 
   @Override
   public boolean followerInverted() {
@@ -66,20 +74,14 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
   }
 
   @Override
-  public CurrentLimitsConfigs currentLimits() {
+  public CanId canIdFollower() {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'currentLimits'");
+    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
   }
 
-  @Override
-  public boolean inverted() {
+    @Override
+  public void bindCommands() {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'inverted'");
-  }
-
-  @Override
-  public boolean brakeMode() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'brakeMode'");
+    throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
   }
 }
