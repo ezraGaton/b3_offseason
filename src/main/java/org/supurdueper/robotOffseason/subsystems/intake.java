@@ -7,9 +7,12 @@ package org.supurdueper.robotOffseason.subsystems;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.Constants.IntakeConstants;
+import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
 import static edu.wpi.first.units.Units.*;
@@ -25,7 +28,11 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
   /** Creates a new Intake. */
-  public intake() {}
+  public intake() {
+    config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(IntakeConstants.kGearRatio));
+    configureMotors();
+    //Robot.add(this);
+  }
 
   @Override
   public void periodic() {

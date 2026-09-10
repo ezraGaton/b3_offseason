@@ -10,6 +10,7 @@ import org.supurdueper.robotOffseason.commands.ExampleCommand;
 import org.supurdueper.robotOffseason.state.Driver;
 import org.supurdueper.robotOffseason.subsystems.ExampleSubsystem;
 import org.supurdueper.robotOffseason.subsystems.Vision;
+import org.supurdueper.robotOffseason.subsystems.intake;
 import org.supurdueper.robotOffseason.subsystems.drive.Drivetrain;
 import org.supurdueper.robotOffseason.subsystems.drive.generated.TunerConstants;
 
@@ -38,6 +39,9 @@ public class RobotContainer {
   @Getter
     private static Drivetrain drivetrain;
 
+  @Getter
+   private static intake intake;
+
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -50,6 +54,7 @@ public class RobotContainer {
   public RobotContainer() {
     vision = new Vision();
     drivetrain = TunerConstants.createDrivetrain();
+    intake = new intake();
     configureBindings();
   }
 

@@ -56,6 +56,7 @@ public final class Constants {
         public static final double kA = 0;
         public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
         public static final AngularVelocity kFowardVelocity = RotationsPerSecond.of(3);
+        public static final double kGearRatio = 0;
         
     }
 
