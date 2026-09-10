@@ -10,6 +10,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -53,6 +54,8 @@ public final class Constants {
         public static final double kS = 0;
         public static final double kV = 0;
         public static final double kA = 0;
+        public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
+        public static final AngularVelocity kFowardVelocity = RotationsPerSecond.of(3);
         
     }
 

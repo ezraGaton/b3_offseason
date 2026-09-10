@@ -7,14 +7,19 @@ package org.supurdueper.robotOffseason.subsystems;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+
+import static edu.wpi.first.units.Units.*;
 
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.TalonFXSubsystem;
 
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -24,7 +29,7 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    super.periodic();
   }
 
   @Override
@@ -39,14 +44,12 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
 
   @Override
   public AngularVelocity velocityTolerance() {
-     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
+    return Constants.IntakeConstants.kTolerance;
   }
 
   @Override
   public SysIdRoutine sysIdConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
+    return null;
   }
 
   @Override
@@ -79,9 +82,20 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
     return false;
   }
 
+  public void runFoward() {
+    setVelocity(Constants.IntakeConstants.kFowardVelocity);
+  }
+
+  public void runBrake() {
+    setVelocity(RotationsPerSecond.of(0));
+  }
+
+  public Command runintake() {
+    return Commands.runEnd(this::runintake ,this::runBrake);
+  }
+
   @Override
   public void bindCommands() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
+  RobotStates.actionIntake.whileTrue(runintake());
   }
 }
