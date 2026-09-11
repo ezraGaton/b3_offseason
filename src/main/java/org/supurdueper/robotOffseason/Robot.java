@@ -4,6 +4,7 @@
 
 package org.supurdueper.robotOffseason;
 
+import org.supurdueper.lib.subsystems.SupurdueperRobot;
 import org.supurdueper.robotOffseason.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -15,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * the TimedRobot documentation. If you change the name of this class or the package after creating
  * this project, you must also update the Main.java file in the project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends SupurdueperRobot {
   private Command m_autonomousCommand;
 
     @SuppressWarnings("unused")

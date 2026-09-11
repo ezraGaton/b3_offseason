@@ -22,7 +22,7 @@ public class Vision extends SubsystemBase implements SupurdueperSubsystem {
     public static final String leftLimelightName = "limelight-l";
 
     public Vision() {
-    //    Robot.add(this);
+        Robot.add(this);
     }
 
     @Override
