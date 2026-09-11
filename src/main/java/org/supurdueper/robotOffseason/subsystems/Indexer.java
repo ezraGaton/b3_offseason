@@ -91,10 +91,16 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
   public void runIndexerBreak() {
     setVelocity(RotationsPerSecond.of(0));
   }
-  
+
+  public void runPurge() {
+    setVelocity(Constants.IndexerConstants.kBackwardVelocity);
+  }
+
+  //Runs the indexer
   public Command runIndexerShoot() {
     return Commands.runEnd(this::runIndexerFoward, this::runIndexerBreak);
   }
+
 
     @Override
   public void bindCommands() {
