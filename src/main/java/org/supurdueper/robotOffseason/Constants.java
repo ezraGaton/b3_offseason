@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.signals.GravityTypeValue;
+
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.util.Units;
@@ -103,6 +105,14 @@ public final class Constants {
         public static final AngularVelocity kFastSpeed = null;;
 
 
+    }
+
+    public static final class ShooterConstants {
+        public static final double kMaxAmps = 50.0;
+        public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
+        .withStatorCurrentLimit(kMaxAmps)
+        .withStatorCurrentLimitEnable(true);
+        
     }
 
     public static boolean disableHAL = false;

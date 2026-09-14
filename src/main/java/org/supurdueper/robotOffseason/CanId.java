@@ -1,5 +1,7 @@
 package org.supurdueper.robotOffseason;
 
+import java.lang.constant.Constable;
+
 import com.ctre.phoenix6.CANBus;
 
 public enum CanId {
@@ -25,8 +27,14 @@ public enum CanId {
 
     //Indexer
     INDEXER_ONE(11,Constants.canivoreBus),
+
     //Roller floor
-    ROLLER_FLOOR_ONE(12,Constants.canivoreBus);
+    ROLLER_FLOOR_ONE(12,Constants.canivoreBus),
+
+    //Shooter
+    SHOOTER_ONE(12,Constants.canivoreBus),
+    SHOOTER_TWO(13,Constants.canivoreBus);
+
 
     private final int mDeviceNumber;
     private final CANBus mBus;
