@@ -4,9 +4,11 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
+import org.supurdueper.lib.Alert;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
+import org.supurdueper.robotOffseason.Constants;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -32,20 +34,22 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public Slot0Configs pidGains() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'pidGains'");
+    return new Slot0Configs()
+    .withKP(Constants.ShooterConstants.kP)
+    .withKI(Constants.ShooterConstants.kI)
+    .withKS(Constants.ShooterConstants.kS)
+    .withKV(Constants.ShooterConstants.kV)
+    .withKA(Constants.ShooterConstants.kA);
   }
 
   @Override
   public AngularVelocity velocityTolerance() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'velocityTolerance'");
+    return Constants.ShooterConstants.kTolerance;
   }
 
   @Override
   public SysIdRoutine sysIdConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
+    return null;
   }
 
   @Override
@@ -65,8 +69,7 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public CurrentLimitsConfigs currentLimits() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'currentLimits'");
+    return Constants.ShooterConstants.kCurrentLimits;
   }
 
   @Override

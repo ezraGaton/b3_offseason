@@ -112,6 +112,12 @@ public final class Constants {
         public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
         .withStatorCurrentLimit(kMaxAmps)
         .withStatorCurrentLimitEnable(true);
+        public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
         
     }
 
