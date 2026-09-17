@@ -28,8 +28,11 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public void bindCommands() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
+    
+  }
+
+  public void runShoot(){
+    
   }
 
   @Override

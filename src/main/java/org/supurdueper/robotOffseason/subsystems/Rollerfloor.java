@@ -22,9 +22,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public class RollerFloor extends VelocitySubsystem implements SupurdueperSubsystem {
+public class Rollerfloor extends VelocitySubsystem implements SupurdueperSubsystem {
   /** Creates a new RollerFloor. */
-  public RollerFloor() {}
+  public Rollerfloor() {}
 
   @Override
   public void periodic() {
