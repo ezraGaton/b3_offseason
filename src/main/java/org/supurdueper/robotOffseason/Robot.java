@@ -4,9 +4,12 @@
 
 package org.supurdueper.robotOffseason;
 
+import org.supurdueper.BuildConstants;
 import org.supurdueper.lib.subsystems.SupurdueperRobot;
 import org.supurdueper.robotOffseason.subsystems.Vision;
 
+import dev.doglog.DogLog;
+import dev.doglog.DogLogOptions;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -95,6 +98,32 @@ public class Robot extends SupurdueperRobot {
   @Override
   public void testPeriodic() {}
 
+  @Override 
+  public void robotInit() {
+    DogLog.setOptions(new DogLogOptions()
+                .withLogExtras(false)
+                .withCaptureDs(false)
+                .withNtPublish(Constants.publishToNT)
+                .withCaptureNt(false));
+        // Record metadata
+        DogLog.log("Git/ProjectName", BuildConstants.MAVEN_NAME);
+        DogLog.log("Git/BuildDate", BuildConstants.BUILD_DATE);
+        DogLog.log("Git/GitSHA", BuildConstants.GIT_SHA);
+        DogLog.log("Git/GitDate", BuildConstants.GIT_DATE);
+        DogLog.log("Git/GitBranch", BuildConstants.GIT_BRANCH);
+        switch (BuildConstants.DIRTY) {
+            case 0:
+                DogLog.log("Git/GitDirty", "All changes committed");
+                break;
+            case 1:
+                DogLog.log("Git/GitDirty", "Uncomitted changes");
+                break;
+            default:
+                DogLog.log("Git/GitDirty", "Unknown");
+                break;
+  }
+}
+
   /** This function is called once when the robot is first started up. */
   @Override
   public void simulationInit() {}
@@ -102,5 +131,13 @@ public class Robot extends SupurdueperRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+      public void resetCommandsAndButtons() {
+        CommandScheduler.getInstance().cancelAll(); // Disable any currently running commands
+        CommandScheduler.getInstance().getActiveButtonLoop().clear();
+
+        // Bind Triggers for all subsystems
+        bindCommands();
+    }
 
 }
