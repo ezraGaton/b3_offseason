@@ -33,7 +33,11 @@ public enum CanId {
 
     //Shooter
     SHOOTER_ONE(12,Constants.canivoreBus),
-    SHOOTER_TWO(13,Constants.canivoreBus);
+    SHOOTER_TWO(13,Constants.canivoreBus),
+    SHOOTER_THREE(14,Constants.canivoreBus),
+    SHOOTER_FOUR(15,Constants.canivoreBus),
+    SHOOTER_FIVE(16,Constants.canivoreBus),
+    SHOOTER_SIX(17,Constants.canivoreBus);
 
 
     private final int mDeviceNumber;

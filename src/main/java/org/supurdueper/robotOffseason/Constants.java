@@ -118,6 +118,8 @@ public final class Constants {
         public static final double kS = 0;
         public static final double kV = 0;
         public static final double kA = 0;
+        public static final AngularVelocity kShootSpeed = RotationsPerSecond.of(0);
+        public static final double shooterGearRatio = 0;
         
     }
 
