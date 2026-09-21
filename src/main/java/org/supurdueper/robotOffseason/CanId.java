@@ -25,6 +25,9 @@ public enum CanId {
     INTAKE_ONE(9,Constants.canivoreBus),
     INTAKE_TWO(10,Constants.canivoreBus),
 
+    //Intake Pivot
+    INTAKE_PIVOT_ONE(18,Constants.canivoreBus),
+
     //Indexer
     INDEXER_ONE(11,Constants.canivoreBus),
 
@@ -38,6 +41,8 @@ public enum CanId {
     SHOOTER_FOUR(15,Constants.canivoreBus),
     SHOOTER_FIVE(16,Constants.canivoreBus),
     SHOOTER_SIX(17,Constants.canivoreBus);
+
+    
 
 
     private final int mDeviceNumber;
