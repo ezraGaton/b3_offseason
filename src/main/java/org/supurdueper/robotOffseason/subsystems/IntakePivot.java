@@ -7,11 +7,13 @@ package org.supurdueper.robotOffseason.subsystems;
 import org.supurdueper.lib.subsystems.PositionSubsystem;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.robotOffseason.CanId;
+import org.supurdueper.robotOffseason.Constants;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,68 +35,74 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
   }
 
   @Override
+  protected void setPosition(Angle position){
+    // TODO
+  }
+
+
+  @Override
   public Slot0Configs pidGains() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'pidGains'");
+    return new Slot0Configs()
+    .withGravityType(GravityTypeValue.Arm_Cosine)
+    .withKP(Constants.IntakePivotConstants.kP)
+    .withKI(Constants.IntakePivotConstants.kI)
+    .withKS(Constants.IntakePivotConstants.kS)
+    .withKV(Constants.IntakePivotConstants.kV)
+    .withKA(Constants.IntakePivotConstants.kA)
+    .withKG(Constants.IntakePivotConstants.kG);
   }
 
   @Override
   public MotionMagicConfigs motionMagicConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'motionMagicConfig'");
+    return null;
   }
 
   @Override
   public SoftwareLimitSwitchConfigs softLimitConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'softLimitConfig'");
+    return new SoftwareLimitSwitchConfigs()
+    .withForwardSoftLimitThreshold(Constants.IntakePivotConstants.kFowardSoftLimit)
+    .withForwardSoftLimitEnable(true)
+    .withReverseSoftLimitThreshold(Constants.IntakePivotConstants.kBackwardSoftLimit)
+    .withReverseSoftLimitEnable(true);
   }
 
   @Override
   public Angle positionTolerance() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'positionTolerance'");
+    return Constants.IntakePivotConstants.positionTolerance;
   }
 
   @Override
   public SysIdRoutine sysIdConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
+    return null;
   }
 
   @Override
   public CanId canIdLeader() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdLeader'");
+    return CanId.INTAKE_PIVOT_ONE;
   }
 
   @Override
   public CanId canIdFollower() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
+    return null;
   }
 
   @Override
   public boolean followerInverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'followerInverted'");
+    return false;
   }
 
   @Override
   public CurrentLimitsConfigs currentLimits() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'currentLimits'");
+    return Constants.IntakePivotConstants.kCurrentLimits;
   }
 
   @Override
   public boolean inverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'inverted'");
+    return false;
   }
 
   @Override
   public boolean brakeMode() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'brakeMode'");
+    return false;
   }
 }

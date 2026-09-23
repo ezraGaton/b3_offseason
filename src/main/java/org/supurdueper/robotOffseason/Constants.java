@@ -123,6 +123,22 @@ public final class Constants {
         
     }
 
+    public static final class IntakePivotConstants{
+        public static final double kMaxAmps = 50.0;
+        public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
+        .withStatorCurrentLimit(kMaxAmps)
+        .withStatorCurrentLimitEnable(true);
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+        public static final double kG = 0;
+        public static final Angle positionTolerance = null;
+        public static final Angle kFowardSoftLimit = null;
+        public static final Angle kBackwardSoftLimit = null;
+    }
+
     public static boolean disableHAL = false;
 
     public static void disableHAL() {
