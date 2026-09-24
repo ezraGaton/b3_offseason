@@ -55,6 +55,8 @@ public class RobotContainer {
     vision = new Vision();
     drivetrain = TunerConstants.createDrivetrain();
     intake = new intake();
+    driver = new Driver(0);
+    
     configureBindings();
   }
 
