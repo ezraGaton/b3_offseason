@@ -68,7 +68,7 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
 
   @Override
   public CanId canIdFollower() {
-    return CanId.INTAKE_TWO;
+    return null;
   }
 
   @Override

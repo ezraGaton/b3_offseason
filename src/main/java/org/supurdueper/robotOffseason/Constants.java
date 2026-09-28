@@ -100,9 +100,11 @@ public final class Constants {
 
         public static final double kTolerance = 0;
 
-        public static final AngularVelocity kSlowSpeed = null;
+        public static final AngularVelocity kSlowSpeed = RotationsPerSecond.of(0);
 
-        public static final AngularVelocity kFastSpeed = null;;
+        public static final AngularVelocity kFastSpeed = RotationsPerSecond.of(0);
+
+        public static final double kGearRatio = 1;
 
 
     }

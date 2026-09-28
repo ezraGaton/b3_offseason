@@ -10,9 +10,13 @@ import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.Constants.IntakeConstants;
+import org.supurdueper.robotOffseason.Constants.RollerFloorConstants;
+import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
 import edu.wpi.first.units.AngularVelocityUnit;
@@ -24,7 +28,11 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class Rollerfloor extends VelocitySubsystem implements SupurdueperSubsystem {
   /** Creates a new RollerFloor. */
-  public Rollerfloor() {}
+  public Rollerfloor() {
+    config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(RollerFloorConstants.kGearRatio));
+    configureMotors();
+    Robot.add(this);
+  }
 
   @Override
   public void periodic() {

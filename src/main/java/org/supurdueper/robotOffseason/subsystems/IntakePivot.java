@@ -78,7 +78,7 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public CanId canIdLeader() {
-    return CanId.INTAKE_PIVOT_ONE;
+    return null;
   }
 
   @Override

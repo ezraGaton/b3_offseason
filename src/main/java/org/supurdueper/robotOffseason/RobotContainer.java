@@ -9,6 +9,7 @@ import org.supurdueper.robotOffseason.commands.Autos;
 import org.supurdueper.robotOffseason.commands.ExampleCommand;
 import org.supurdueper.robotOffseason.state.Driver;
 import org.supurdueper.robotOffseason.subsystems.ExampleSubsystem;
+import org.supurdueper.robotOffseason.subsystems.Rollerfloor;
 import org.supurdueper.robotOffseason.subsystems.Vision;
 import org.supurdueper.robotOffseason.subsystems.intake;
 import org.supurdueper.robotOffseason.subsystems.drive.Drivetrain;
@@ -40,23 +41,28 @@ public class RobotContainer {
     private static Drivetrain drivetrain;
 
   @Getter
-   private static intake intake;
+    private static Rollerfloor rollerfloor;
+
+//  @Getter
+//   private static intake intake;
 
 
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(DriverConstants.kControllerPort);
+  //private final CommandXboxController m_driverController =
+  //    new CommandXboxController(DriverConstants.kControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     vision = new Vision();
     drivetrain = TunerConstants.createDrivetrain();
-    intake = new intake();
+ //   intake = new intake();
     driver = new Driver(0);
-    
+    testController = new Driver(1);
+    rollerfloor = new Rollerfloor();
+
     configureBindings();
   }
 
@@ -71,21 +77,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    //new Trigger(m_exampleSubsystem::exampleCondition)
+    //    .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
 }

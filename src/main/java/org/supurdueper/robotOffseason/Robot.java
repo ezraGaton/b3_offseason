@@ -6,11 +6,17 @@ package org.supurdueper.robotOffseason;
 
 import org.supurdueper.BuildConstants;
 import org.supurdueper.lib.subsystems.SupurdueperRobot;
+import org.supurdueper.robotOffseason.state.RobotStates;
 import org.supurdueper.robotOffseason.subsystems.Vision;
 
+import choreo.auto.AutoChooser;
 import dev.doglog.DogLog;
 import dev.doglog.DogLogOptions;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -20,8 +26,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends SupurdueperRobot {
-  private Command m_autonomousCommand;
-
     @SuppressWarnings("unused")
     private final RobotContainer m_robotContainer;
 
@@ -44,11 +48,9 @@ public class Robot extends SupurdueperRobot {
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
-    // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().run();
+        Threads.setCurrentThreadPriority(true,1);
+        CommandScheduler.getInstance().run();
+   
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -61,12 +63,7 @@ public class Robot extends SupurdueperRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      CommandScheduler.getInstance().schedule(m_autonomousCommand);
-    }
+    
   }
 
   /** This function is called periodically during autonomous. */
@@ -79,9 +76,7 @@ public class Robot extends SupurdueperRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    resetCommandsAndButtons();
   }
 
   /** This function is called periodically during operator control. */
@@ -91,7 +86,7 @@ public class Robot extends SupurdueperRobot {
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
+    resetCommandsAndButtons();
   }
 
   /** This function is called periodically during test mode. */
@@ -122,6 +117,7 @@ public class Robot extends SupurdueperRobot {
                 DogLog.log("Git/GitDirty", "Unknown");
                 break;
   }
+  resetCommandsAndButtons();
 }
 
   /** This function is called once when the robot is first started up. */
