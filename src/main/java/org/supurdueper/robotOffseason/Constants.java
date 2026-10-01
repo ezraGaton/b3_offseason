@@ -81,6 +81,15 @@ public final class Constants {
 
     }
 
+    public static final class ShooterHoodConstants {
+
+        public static final double gearRatio = 0;
+        public static final Voltage kPeakForwardVoltage = null;
+        public static final Voltage kPeakReverseVoltage = null;
+        public static final Angle kZeroPosition = null;
+
+    }
+
     public static final class RollerFloorConstants {
 
         public static final double kMaxAmps = 50.0;
@@ -122,7 +131,7 @@ public final class Constants {
         public static final double kV = 0.035;
         public static final double kA = 0;
         public static final AngularVelocity kShootSpeed = RotationsPerSecond.of(33.33);
-        public static final double shooterGearRatio = 24/30;
+        public static final double shooterGearRatio = 0.8;
         
     }
 

@@ -7,19 +7,32 @@ package org.supurdueper.robotOffseason.subsystems;
 import org.supurdueper.lib.subsystems.PositionSubsystem;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.robotOffseason.CanId;
+import org.supurdueper.robotOffseason.Constants.ShooterHoodConstants;
+import org.supurdueper.robotOffseason.Robot;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+import com.ctre.phoenix6.configs.VoltageConfigs;
 
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
+
 public class ShooterHood extends PositionSubsystem implements SupurdueperSubsystem {
   /** Creates a new ShooterHood. */
-  public ShooterHood() {}
+  public ShooterHood() {
+      config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(ShooterHoodConstants.gearRatio))
+                .withVoltage(new VoltageConfigs()
+                        .withPeakForwardVoltage(ShooterHoodConstants.kPeakForwardVoltage)
+                        .withPeakReverseVoltage(ShooterHoodConstants.kPeakReverseVoltage));
+        configureMotors();
+        Robot.add(this);
+        motor.setPosition(ShooterHoodConstants.kZeroPosition);
+  }
 
   @Override
   public void periodic() {
