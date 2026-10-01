@@ -23,7 +23,7 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    super.periodic();
   }
 
   @Override
@@ -34,8 +34,7 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public MotionMagicConfigs motionMagicConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'motionMagicConfig'");
+    return null;
   }
 
   @Override
@@ -58,14 +57,12 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public CanId canIdLeader() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdLeader'");
+    return CanId.SHOOTER_PIVOT_ONE;
   }
 
   @Override
   public CanId canIdFollower() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
+    return null;
   }
 
   @Override

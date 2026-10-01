@@ -9,7 +9,9 @@ import org.supurdueper.robotOffseason.commands.Autos;
 import org.supurdueper.robotOffseason.commands.ExampleCommand;
 import org.supurdueper.robotOffseason.state.Driver;
 import org.supurdueper.robotOffseason.subsystems.ExampleSubsystem;
+import org.supurdueper.robotOffseason.subsystems.Indexer;
 import org.supurdueper.robotOffseason.subsystems.Rollerfloor;
+import org.supurdueper.robotOffseason.subsystems.Shooter;
 import org.supurdueper.robotOffseason.subsystems.Vision;
 import org.supurdueper.robotOffseason.subsystems.intake;
 import org.supurdueper.robotOffseason.subsystems.drive.Drivetrain;
@@ -43,6 +45,15 @@ public class RobotContainer {
   @Getter
     private static Rollerfloor rollerfloor;
 
+  
+  @Getter
+
+  private static Indexer indexer;
+  
+    @Getter
+
+  private static Shooter shooter;
+
 //  @Getter
 //   private static intake intake;
 
@@ -62,6 +73,8 @@ public class RobotContainer {
     driver = new Driver(0);
     testController = new Driver(1);
     rollerfloor = new Rollerfloor();
+    indexer = new Indexer();
+    shooter = new Shooter();
 
     configureBindings();
   }

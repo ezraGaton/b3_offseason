@@ -5,6 +5,7 @@
 package org.supurdueper.robotOffseason.subsystems;
 
 import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volt;
 
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
@@ -21,6 +22,8 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 
 import edu.wpi.first.units.AngularVelocityUnit;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.units.VoltageUnit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -46,6 +49,7 @@ public class Rollerfloor extends VelocitySubsystem implements SupurdueperSubsyst
   }
 
   public void runSlow(){
+    //runVoltage(Volt.of(12));
     setVelocity(Constants.RollerFloorConstants.kSlowSpeed);
   }
 
@@ -105,7 +109,7 @@ public class Rollerfloor extends VelocitySubsystem implements SupurdueperSubsyst
 
   @Override
   public boolean inverted() {
-   return false;
+   return true;
   }
 
   @Override

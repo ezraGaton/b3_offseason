@@ -30,7 +30,7 @@ import org.supurdueper.lib.utils.ExpCurve;
  */
 public final class Constants {
     public static final double loopPeriodSecs = 0.02;
-    public static boolean tuningMode = false;
+    public static boolean tuningMode = true;
     public static boolean publishToNT = true;
     public static CANBus canivoreBus = new CANBus("canivore");
     public static CANBus rioBus = new CANBus("rio");
@@ -68,14 +68,15 @@ public final class Constants {
         public static final CurrentLimitsConfigs kCurrentLimitsIndexer = new CurrentLimitsConfigs()
             .withStatorCurrentLimit(kMaxAmps)
             .withStatorCurrentLimitEnable(true);
-        public static final double kP = 0;
+        public static final double kP = 1.2;
         public static final double kI = 0;
-        public static final double kS = 0;
+        public static final double kS = 1.85;
         public static final double kV = 0;
         public static final double kA = 0;
         public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
-        public static final AngularVelocity kFowardVelocity = RotationsPerSecond.of(0);
+        public static final AngularVelocity kFowardVelocity = RPM.of(3000);
         public static final AngularVelocity kBackwardVelocity = RotationsPerSecond.of(0);
+        public static final double kGearRatio = 1/3;
 
 
     }
@@ -88,23 +89,23 @@ public final class Constants {
         .withStatorCurrentLimit(kMaxAmps)
         .withStatorCurrentLimitEnable(true);
 
-        public static final double kP = 0;
+        public static final double kP = 5;
 
         public static final double kI = 0;
 
-        public static final double kS = 0;
+        public static final double kS = 10.5;
 
         public static final double kA = 0;
 
-        public static final double kV = 0;
+        public static final double kV = 0.08;
 
         public static final double kTolerance = 0;
 
-        public static final AngularVelocity kSlowSpeed = RotationsPerSecond.of(0);
+        public static final AngularVelocity kSlowSpeed = RotationsPerSecond.of(10);
 
-        public static final AngularVelocity kFastSpeed = RotationsPerSecond.of(0);
+        public static final AngularVelocity kFastSpeed = RotationsPerSecond.of(100);
 
-        public static final double kGearRatio = 1;
+        public static final double kGearRatio = 1/3;
 
 
     }
@@ -115,13 +116,13 @@ public final class Constants {
         .withStatorCurrentLimit(kMaxAmps)
         .withStatorCurrentLimitEnable(true);
         public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
-        public static final double kP = 0;
+        public static final double kP = 2;
         public static final double kI = 0;
-        public static final double kS = 0;
-        public static final double kV = 0;
+        public static final double kS = 5;
+        public static final double kV = 0.035;
         public static final double kA = 0;
-        public static final AngularVelocity kShootSpeed = RotationsPerSecond.of(0);
-        public static final double shooterGearRatio = 0;
+        public static final AngularVelocity kShootSpeed = RotationsPerSecond.of(33.33);
+        public static final double shooterGearRatio = 24/30;
         
     }
 

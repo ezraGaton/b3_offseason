@@ -26,7 +26,7 @@ public enum CanId {
     INTAKE_TWO(10,Constants.canivoreBus),
 
     //Intake Pivot
-    INTAKE_PIVOT_ONE(18,Constants.canivoreBus),
+    INTAKE_PIVOT_ONE(19,Constants.canivoreBus),
 
     //Indexer
     INDEXER_ONE(11,Constants.canivoreBus),
@@ -39,9 +39,13 @@ public enum CanId {
     SHOOTER_TWO(14,Constants.canivoreBus),
     SHOOTER_THREE(15,Constants.canivoreBus),
     SHOOTER_FOUR(16,Constants.canivoreBus),
-    SHOOTER_FIVE(17,Constants.canivoreBus),
-    SHOOTER_SIX(18,Constants.canivoreBus);
 
+    //Feeder
+    FEEDER_ONE(17,Constants.canivoreBus),
+    FEEDER_TWO(18,Constants.canivoreBus),
+
+    //Shooter pivot
+    SHOOTER_PIVOT_ONE(20,Constants.canivoreBus);
     
 
 

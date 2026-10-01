@@ -4,6 +4,8 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
+import static edu.wpi.first.units.Units.Degrees;
+
 import org.supurdueper.lib.subsystems.PositionSubsystem;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.robotOffseason.CanId;
@@ -16,6 +18,7 @@ import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -34,9 +37,13 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
     throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
   }
 
-  @Override
-  protected void setPosition(Angle position){
-    // TODO
+
+  public void goToDown() {
+    setPosition(Degrees.of(90));
+  }
+
+  public void goToUp(){
+    setPosition(Degrees.of(0));
   }
 
 

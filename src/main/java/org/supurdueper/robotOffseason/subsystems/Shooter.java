@@ -13,6 +13,7 @@ import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
 import org.supurdueper.robotOffseason.Constants.ShooterConstants;
+import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
@@ -31,10 +32,10 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
     config.Feedback.SensorToMechanismRatio = ShooterConstants.shooterGearRatio;
 
     //Creates followers because we have more than
-    TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_THREE, motor, false);
-    TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_FOUR, motor, false);
-    TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_FIVE, motor, false);
-    TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_SIX, motor, false);
+    TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_THREE, motor, true);
+    TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_FOUR, motor, true);
+    Robot.add(this);
+
   }
 
   

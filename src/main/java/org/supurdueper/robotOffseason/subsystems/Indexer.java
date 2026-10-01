@@ -4,6 +4,8 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.rmi.server.RemoteStub;
@@ -12,11 +14,16 @@ import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.Constants.IndexerConstants;
+import org.supurdueper.robotOffseason.Constants.IntakeConstants;
+import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,11 +33,18 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
   /** Creates a new Indexer. */
-  public Indexer() {}
+  public Indexer() {
+     config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(IndexerConstants.kGearRatio));
+    configureMotors();
+    Robot.add(this);
+  }
 
   @Override
   public void periodic() {
     super.periodic();
+    DogLog.log("Uptake/RPM", getVelocity().in(RPM));
+    DogLog.log("Uptake/Target RPM", getSetpoint().in(RPM));
+    DogLog.log("Uptake/Current", motor.getTorqueCurrent().getValue().in(Amps));
   }
 
   @Override
@@ -65,7 +79,7 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public boolean inverted() {
-    return false;
+    return true;
   }
 
   @Override
@@ -89,7 +103,7 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
     setVelocity(Constants.IndexerConstants.kFowardVelocity);
   }
   public void runIndexerBreak() {
-    setVelocity(RotationsPerSecond.of(0));
+    setVelocity(RPM.of(0));
   }
 
   public void runPurge() {
@@ -105,5 +119,9 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
     @Override
   public void bindCommands() {
     RobotStates.actionShoot.whileTrue(runIndexerShoot());
+   // RobotStates.testController.B.onTrue(goToVelocity(() -> RPM.of(500)));
+   // RobotStates.testController.X.onTrue(goToVelocity(() -> RPM.of(1000)));
+   // RobotStates.testController.Y.onTrue(goToVelocity(() -> RPM.of(2000)));
+   // RobotStates.testController.A.onTrue(run(this::stop));
   }
 }
