@@ -140,6 +140,10 @@ public final class Constants {
         public static final Angle positionTolerance = null;
         public static final Angle kFowardSoftLimit = null;
         public static final Angle kBackwardSoftLimit = null;
+        public static final Angle kZeroPosition = null;
+        public static final Voltage kPeakReverseVoltage = null;
+        public static final Voltage kPeakForwardVoltage = null;
+        public static final double gearRatio = 0;
     }
 
     public static boolean disableHAL = false;

@@ -30,6 +30,7 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
   public Shooter() {
     
     config.Feedback.SensorToMechanismRatio = ShooterConstants.shooterGearRatio;
+    configureMotors();
 
     //Creates followers because we have more than
     TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_THREE, motor, true);

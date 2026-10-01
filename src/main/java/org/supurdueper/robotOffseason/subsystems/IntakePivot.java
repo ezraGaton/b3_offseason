@@ -6,15 +6,22 @@ package org.supurdueper.robotOffseason.subsystems;
 
 import static edu.wpi.first.units.Units.Degrees;
 
+import org.supurdueper.lib.LoggedTunableNumber;
 import org.supurdueper.lib.subsystems.PositionSubsystem;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.Robot;
+import org.supurdueper.robotOffseason.Constants.IntakePivotConstants;
+import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+import com.ctre.phoenix6.configs.VoltageConfigs;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 
 import edu.wpi.first.units.measure.Angle;
@@ -24,7 +31,27 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class IntakePivot extends PositionSubsystem implements SupurdueperSubsystem {
   /** Creates a new IntakePivot. */
-  public IntakePivot() {}
+      private PositionVoltage noMagicMotion = new PositionVoltage(0);
+
+  public IntakePivot() {
+    config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(IntakePivotConstants.gearRatio))
+                .withVoltage(new VoltageConfigs()
+                        .withPeakForwardVoltage(IntakePivotConstants.kPeakForwardVoltage)
+                        .withPeakReverseVoltage(IntakePivotConstants.kPeakReverseVoltage));
+        configureMotors();
+        Robot.add(this);
+        motor.setPosition(IntakePivotConstants.kZeroPosition);
+  }
+
+  @Override
+    protected void setPosition(Angle position) {
+        motor.setControl(noMagicMotion.withPosition(position));
+    }
+
+    @Override
+    protected void setPosition(double position) {
+        motor.setControl(noMagicMotion.withPosition(position));
+    }
 
   @Override
   public void periodic() {
@@ -33,8 +60,6 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public void bindCommands() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
   }
 
 
@@ -85,7 +110,7 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public CanId canIdLeader() {
-    return null;
+    return CanId.INTAKE_PIVOT_ONE;
   }
 
   @Override
