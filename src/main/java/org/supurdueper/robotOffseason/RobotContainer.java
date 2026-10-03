@@ -44,18 +44,15 @@ public class RobotContainer {
 
   @Getter
     private static Rollerfloor rollerfloor;
-
   
   @Getter
-
-  private static Indexer indexer;
+    private static Indexer indexer;
   
-    @Getter
+  @Getter
+   private static Shooter shooter;
 
-  private static Shooter shooter;
-
-//  @Getter
-//   private static intake intake;
+  @Getter
+    private static intake intake;
 
 
   // The robot's subsystems and commands are defined here...
@@ -75,6 +72,7 @@ public class RobotContainer {
     rollerfloor = new Rollerfloor();
     indexer = new Indexer();
     shooter = new Shooter();
+    intake = new intake();
 
     configureBindings();
   }

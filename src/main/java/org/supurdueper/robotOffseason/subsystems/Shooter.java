@@ -28,11 +28,15 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
   /** Creates a new Shooter. */
   public Shooter() {
-    
     config.Feedback.SensorToMechanismRatio = ShooterConstants.shooterGearRatio;
+    config.TorqueCurrent.PeakForwardTorqueCurrent = ShooterConstants.kMaxAmps;
+    config.TorqueCurrent.PeakReverseTorqueCurrent = 0;
+    config.MotorOutput.PeakForwardDutyCycle = 1.0;
+    config.MotorOutput.PeakForwardDutyCycle = 0.0;
     configureMotors();
 
     //Creates followers because we have more than
+    TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_TWO, motor, false);
     TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_THREE, motor, true);
     TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_FOUR, motor, true);
     Robot.add(this);
@@ -90,7 +94,7 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
 
   @Override
   public CanId canIdFollower() {
-    return CanId.SHOOTER_TWO;
+    return null;
   }
 
   @Override

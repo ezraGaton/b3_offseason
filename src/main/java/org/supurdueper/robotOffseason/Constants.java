@@ -155,6 +155,46 @@ public final class Constants {
         public static final double gearRatio = 0;
     }
 
+     public class LookupTables {
+
+        public static final InterpolatingDoubleTreeMap distanceToShooterAngle = new InterpolatingDoubleTreeMap();
+        public static final InterpolatingDoubleTreeMap distanceToShooterRPM = new InterpolatingDoubleTreeMap();
+
+        private static void addPointToDistanceToShooterAngle(double distanceMeters, double angleDegrees) {
+            distanceToShooterAngle.put(distanceMeters, angleDegrees);
+        }
+
+        private static void addPointToDistanceToShooterRPM(double distanceMeters, double velocityRPM) {
+            distanceToShooterAngle.put(distanceMeters, velocityRPM);
+            distanceToShooterRPM.put(distanceMeters, velocityRPM);
+        }
+
+        static {
+            addPointToDistanceToShooterAngle(00, 51.0);
+
+            addPointToDistanceToShooterRPM(00, 1600);
+            addPointToDistanceToShooterAngle(1.6, 19.0);
+            addPointToDistanceToShooterAngle(2.0, 19.0);
+            addPointToDistanceToShooterAngle(2.25, 20.0);
+            addPointToDistanceToShooterAngle(2.5, 22.0);
+            addPointToDistanceToShooterAngle(2.75, 24.0);
+            addPointToDistanceToShooterAngle(3.0, 26.5);
+            addPointToDistanceToShooterAngle(3.25, 28.0);
+            addPointToDistanceToShooterAngle(3.5, 29.0);
+            addPointToDistanceToShooterAngle(5.3, 32.0);
+
+            addPointToDistanceToShooterRPM(1.6, 1550);
+            addPointToDistanceToShooterRPM(2.0, 1650);
+            addPointToDistanceToShooterRPM(2.25, 1700);
+            addPointToDistanceToShooterRPM(2.5, 1725);
+            addPointToDistanceToShooterRPM(2.75, 1725);
+            addPointToDistanceToShooterRPM(3.0, 1750);
+            addPointToDistanceToShooterRPM(3.25, 1775);
+            addPointToDistanceToShooterRPM(3.5, 1825);
+            addPointToDistanceToShooterRPM(5.3, 2050);
+        }
+    }
+
     public static boolean disableHAL = false;
 
     public static void disableHAL() {

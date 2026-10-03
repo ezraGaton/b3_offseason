@@ -7,19 +7,18 @@
       "open": false
     },
     "transitory": {
-      "FMSInfo": {
-        "open": true
-      },
       "LiveWindow": {
         ".status": {
           "open": true
         }
       },
+      "Robot": {
+        "open": true
+      },
       "Shuffleboard": {
         ".metadata": {
           "open": true
-        },
-        "open": true
+        }
       },
       "SmartDashboard": {
         "Tuning": {
