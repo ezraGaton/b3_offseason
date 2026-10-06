@@ -5,14 +5,22 @@
 package org.supurdueper.robotOffseason;
 
 import org.supurdueper.BuildConstants;
+import org.supurdueper.lib.LoggedTunableNumber;
 import org.supurdueper.lib.subsystems.SupurdueperRobot;
+import org.supurdueper.robotOffseason.autos.AutoRoutines;
 import org.supurdueper.robotOffseason.state.RobotStates;
 import org.supurdueper.robotOffseason.subsystems.Vision;
+import org.supurdueper.robotOffseason.utils.FieldConstants;
+
+import com.ctre.phoenix6.HootAutoReplay;
+
 
 import choreo.auto.AutoChooser;
+import choreo.auto.AutoFactory;
 import dev.doglog.DogLog;
 import dev.doglog.DogLogOptions;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -29,7 +37,17 @@ public class Robot extends SupurdueperRobot {
     @SuppressWarnings("unused")
     private final RobotContainer m_robotContainer;
 
-  /**
+    /* Path follower */
+    private final AutoFactory autoFactory;
+    private final AutoRoutines autoRoutines;
+    private final AutoChooser autoChooser = new AutoChooser();
+    private final LoggedTunableNumber autoTimeout;
+  
+    /* log and replay timestamp and joystick data */
+    private final HootAutoReplay m_timeAndJoystickReplay =
+            new HootAutoReplay().withTimestampReplay().withJoystickReplay();
+
+    /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
@@ -37,6 +55,9 @@ public class Robot extends SupurdueperRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    autoFactory = RobotContainer.getDrivetrain().createAutoFactory();
+    autoRoutines = new AutoRoutines(autoFactory);
+    autoTimeout = new LoggedTunableNumber("Auto Timeout", 0.0);
   }
 
   /**
@@ -50,12 +71,14 @@ public class Robot extends SupurdueperRobot {
   public void robotPeriodic() {
         Threads.setCurrentThreadPriority(true,1);
         CommandScheduler.getInstance().run();
-   
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    Vision.setDisabled();
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -63,6 +86,10 @@ public class Robot extends SupurdueperRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    Vision.setEnabled();
+    Vision.setAprilTagFilter();
+    Vision.updateIMUMode();
+    autoChooser.selectedCommandScheduler().schedule();
     
   }
 
@@ -128,12 +155,12 @@ public class Robot extends SupurdueperRobot {
   @Override
   public void simulationPeriodic() {}
 
-      public void resetCommandsAndButtons() {
-        CommandScheduler.getInstance().cancelAll(); // Disable any currently running commands
-        CommandScheduler.getInstance().getActiveButtonLoop().clear();
+  public void resetCommandsAndButtons() {
+    CommandScheduler.getInstance().cancelAll(); // Disable any currently running commands
+    CommandScheduler.getInstance().getActiveButtonLoop().clear();
 
         // Bind Triggers for all subsystems
-        bindCommands();
-    }
+    bindCommands();
+  }
 
 }

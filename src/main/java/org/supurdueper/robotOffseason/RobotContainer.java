@@ -4,11 +4,12 @@
 
 package org.supurdueper.robotOffseason;
 
-import org.supurdueper.robotOffseason.Constants.DriverConstants;
-import org.supurdueper.robotOffseason.commands.Autos;
-import org.supurdueper.robotOffseason.commands.ExampleCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
+import lombok.Getter;
+
 import org.supurdueper.robotOffseason.state.Driver;
-import org.supurdueper.robotOffseason.subsystems.ExampleSubsystem;
+import org.supurdueper.robotOffseason.state.RobotStates;
+
 import org.supurdueper.robotOffseason.subsystems.Indexer;
 import org.supurdueper.robotOffseason.subsystems.Rollerfloor;
 import org.supurdueper.robotOffseason.subsystems.Shooter;
@@ -17,10 +18,7 @@ import org.supurdueper.robotOffseason.subsystems.intake;
 import org.supurdueper.robotOffseason.subsystems.drive.Drivetrain;
 import org.supurdueper.robotOffseason.subsystems.drive.generated.TunerConstants;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import lombok.Getter;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

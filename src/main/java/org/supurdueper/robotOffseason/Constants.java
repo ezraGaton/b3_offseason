@@ -45,6 +45,18 @@ public final class Constants {
         public static final double kDefaultTurnScalor = 0.75;
         public static final double kTurboModeScalor = 1;
     }
+    
+    public static final class DriveConstants {
+        public static final double headingKp = 15.0;
+        public static final double headingKi = 0.0;
+        public static final double headingKd = 0.2;
+        public static final double translationKp = 7.0;
+        public static final double translationKi = 0;
+        public static final double translationKd = 0.1;
+        public static final AngularVelocity rotationClosedLoopDeadband = RadiansPerSecond.of(0.00);
+        public static final LinearVelocity translationClosedLoopDeadband = MetersPerSecond.of(0.01);
+        public static final Translation2d robotToBumperCenter = null;
+    }
 
     public static final class IntakeConstants {
         public static final double kMaxAmps = 50.0;
@@ -136,7 +148,7 @@ public final class Constants {
     }
 
     public static final class IntakePivotConstants{
-        public static final double kMaxAmps = 50.0;
+        public static final double kMaxAmps = 40.0;
         public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
         .withStatorCurrentLimit(kMaxAmps)
         .withStatorCurrentLimitEnable(true);
