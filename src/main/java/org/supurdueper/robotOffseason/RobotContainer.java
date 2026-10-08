@@ -63,9 +63,9 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     vision = new Vision();
+    driver = new Driver(0);
     drivetrain = TunerConstants.createDrivetrain();
  //   intake = new intake();
-    driver = new Driver(0);
     testController = new Driver(1);
     rollerfloor = new Rollerfloor();
     indexer = new Indexer();
