@@ -5,6 +5,7 @@
 package org.supurdueper.robotOffseason.subsystems;
 
 import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Volts;
 
 import org.supurdueper.lib.LoggedTunableNumber;
 import org.supurdueper.lib.subsystems.PositionSubsystem;
@@ -13,6 +14,7 @@ import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
 import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.Constants.IntakePivotConstants;
+import org.supurdueper.robotOffseason.Constants.ShooterHoodConstants;
 import org.supurdueper.robotOffseason.state.RobotStates;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
@@ -24,6 +26,7 @@ import com.ctre.phoenix6.configs.VoltageConfigs;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -56,10 +59,14 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
   @Override
   public void periodic() {
     super.periodic();
+     DogLog.log("IntakePivot/Position (Deg)", getPosition().in(Degrees));
   }
 
   @Override
   public void bindCommands() {
+   // RobotStates.testController.leftStickY.whileTrue(
+                // runEnd(() -> runVoltage(Volts.of(6 * RobotStates.testController.getDriveFwdPositive())), this::stop));
+
   }
 
 
@@ -86,7 +93,11 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public MotionMagicConfigs motionMagicConfig() {
-    return null;
+     return new MotionMagicConfigs()
+                .withMotionMagicExpo_kV(0)
+                .withMotionMagicExpo_kA(0)
+                .withMotionMagicCruiseVelocity(0)
+                .withMotionMagicAcceleration(0);
   }
 
   @Override

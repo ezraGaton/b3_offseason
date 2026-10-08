@@ -7,7 +7,7 @@ package org.supurdueper.robotOffseason.subsystems;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
-import org.supurdueper.robotOffseason.Constants.IntakeConstants;
+import org.supurdueper.robotOffseason.Constants.IntakeBackConstants;
 import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.state.RobotStates;
 
@@ -28,32 +28,33 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
-public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
+public class intakeBack extends VelocitySubsystem implements SupurdueperSubsystem{
   /** Creates a new Intake. */
-  public intake() {
-    config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(IntakeConstants.kGearRatio));
+  public intakeBack() {
+    config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(IntakeBackConstants.kGearRatio));
     configureMotors();
     Robot.add(this);
   }
   @Override
   public void periodic() {
     super.periodic();
-    DogLog.log("Intake/target rpm", getSetpoint().in(RPM));
+    DogLog.log("IntakeBack/target rps", getSetpoint().in(RotationsPerSecond));
+    DogLog.log("IntakeBack/Current RPS", getVelocity().in(RotationsPerSecond));
   }
 
   @Override
   public Slot0Configs pidGains() {
     return new Slot0Configs()
-      .withKP(Constants.IntakeConstants.kP)
-      .withKI(Constants.IntakeConstants.kI)
-      .withKS(Constants.IntakeConstants.kS)
-      .withKV(Constants.IntakeConstants.kV)
-      .withKA(Constants.IntakeConstants.kA);
+      .withKP(Constants.IntakeBackConstants.kP)
+      .withKI(Constants.IntakeBackConstants.kI)
+      .withKS(Constants.IntakeBackConstants.kS)
+      .withKV(Constants.IntakeBackConstants.kV)
+      .withKA(Constants.IntakeBackConstants.kA);
   }
 
   @Override
   public AngularVelocity velocityTolerance() {
-    return Constants.IntakeConstants.kTolerance;
+    return Constants.IntakeBackConstants.kTolerance;
   }
 
   @Override
@@ -63,7 +64,7 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
 
   @Override
   public CanId canIdLeader() {
-    return CanId.INTAKE_ONE;
+    return CanId.INTAKE_TWO;
   }
 
   @Override
@@ -78,12 +79,12 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
 
   @Override
   public CurrentLimitsConfigs currentLimits() {
-    return Constants.IntakeConstants.kCurrentLimits;
+    return Constants.IntakeBackConstants.kCurrentLimits;
   }
 
   @Override
   public boolean inverted() {
-    return false;
+    return true;
   }
 
   @Override
@@ -91,28 +92,15 @@ public class intake extends VelocitySubsystem implements SupurdueperSubsystem{
     return false;
   }
 
-  public void runFoward() {
-    setVelocity(Constants.IntakeConstants.kFowardVelocity);
-  }
-
-  public void runBrake() {
-    setVelocity(RotationsPerSecond.of(0));
-  }
-
-  public void runPurge() {
-    setVelocity(Constants.IntakeConstants.kPurgeVelocity);
-  }
-
-  public Command purge() {
-    return Commands.runEnd(this::runPurge ,this::runBrake).withName("Intake/purgeIntake");
-  }
-
-  public Command runintake() {
-    return Commands.runEnd(this::runFoward ,this::runBrake).withName("Intake/runIntake");
-  }
 
   @Override
   public void bindCommands() {
-  RobotStates.actionIntake.whileTrue(runintake());
+  //RobotStates.testController.B.onTrue(goToVelocity(() -> RotationsPerSecond.of(10)));
+  //RobotStates.testController.X.onTrue(goToVelocity(() -> RotationsPerSecond.of(20)));
+  //RobotStates.testController.Y.onTrue(goToVelocity(() -> RotationsPerSecond.of(40)));
+  //RobotStates.testController.A.onTrue(run(this::stop));
+  RobotStates.actionIntake.onTrue(goToVelocity(()-> RotationsPerSecond.of(40)));
+  RobotStates.actionIntake.onFalse(goToVelocity(()-> RotationsPerSecond.of(0)));
+
   }
 }

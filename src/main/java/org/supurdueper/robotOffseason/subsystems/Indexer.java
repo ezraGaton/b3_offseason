@@ -15,7 +15,7 @@ import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
 import org.supurdueper.robotOffseason.Constants.IndexerConstants;
-import org.supurdueper.robotOffseason.Constants.IntakeConstants;
+import org.supurdueper.robotOffseason.Constants.IntakeFrontConstants;
 import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.state.RobotStates;
 

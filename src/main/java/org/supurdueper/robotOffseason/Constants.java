@@ -58,19 +58,36 @@ public final class Constants {
         public static final Translation2d robotToBumperCenter = null;
     }
 
-    public static final class IntakeConstants {
+    public static final class IntakeFrontConstants {
         public static final double kMaxAmps = 50.0;
         public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
             .withStatorCurrentLimit(kMaxAmps)
             .withStatorCurrentLimitEnable(true);
-        public static final double kP = 0;
+        public static final double kP = 2.5;
         public static final double kI = 0;
-        public static final double kS = 0;
-        public static final double kV = 0;
+        public static final double kS = 2.5;
+        public static final double kV = 0.03;
         public static final double kA = 0;
         public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
-        public static final AngularVelocity kFowardVelocity = RotationsPerSecond.of(3);
-        public static final double kGearRatio = 0;
+        public static final AngularVelocity kFowardVelocity = RotationsPerSecond.of(80);
+        public static final double kGearRatio = 24.0/12.0;
+        public static final AngularVelocity kPurgeVelocity = RotationsPerSecond.of(-3);
+        
+    }
+
+    public static final class IntakeBackConstants {
+        public static final double kMaxAmps = 50.0;
+        public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(kMaxAmps)
+            .withStatorCurrentLimitEnable(true);
+        public static final double kP = 2.5;
+        public static final double kI = 0;
+        public static final double kS = 2.5;
+        public static final double kV = 0;
+        public static final double kA = 0.03;
+        public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
+        public static final AngularVelocity kFowardVelocity = RotationsPerSecond.of(10);
+        public static final double kGearRatio = 24.0/12.0;
         public static final AngularVelocity kPurgeVelocity = RotationsPerSecond.of(-3);
         
     }
@@ -88,17 +105,34 @@ public final class Constants {
         public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
         public static final AngularVelocity kFowardVelocity = RPM.of(3000);
         public static final AngularVelocity kBackwardVelocity = RotationsPerSecond.of(0);
-        public static final double kGearRatio = 1/3;
+        public static final double kGearRatio = 1.0/3.0;
 
 
     }
 
     public static final class ShooterHoodConstants {
-
-        public static final double gearRatio = 0;
-        public static final Voltage kPeakForwardVoltage = null;
-        public static final Voltage kPeakReverseVoltage = null;
-        public static final Angle kZeroPosition = null;
+        public static final double kMaxAmps = 20.0;
+        public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
+            .withStatorCurrentLimit(kMaxAmps)
+            .withStatorCurrentLimitEnable(true);
+        public static final double gearRatio = (300.0/12.0)*(55.0/12.0);
+        public static final Voltage kPeakForwardVoltage = Volts.of(12);
+        public static final Voltage kPeakReverseVoltage = Volts.of(-12);
+        public static final Angle kZeroPosition = Degrees.of(18);
+        public static final double kP = 500;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kA = 0;
+        public static final double kG = 0;
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double profileKa = 0;
+        public static final double profileKv = 0;
+        public static final AngularVelocity profileV = RotationsPerSecond.of(0);
+        public static final AngularAcceleration profileA = RotationsPerSecondPerSecond.of(0);
+        public static final Angle kFowardSoftLimit = Degrees.of(29);
+        public static final Angle kBackwardSoftLimit = Degrees.of(19);
+        public static final Angle positionTolerance = Degrees.of(0.3);
 
     }
 
@@ -158,13 +192,13 @@ public final class Constants {
         public static final double kV = 0;
         public static final double kA = 0;
         public static final double kG = 0;
-        public static final Angle positionTolerance = null;
-        public static final Angle kFowardSoftLimit = null;
-        public static final Angle kBackwardSoftLimit = null;
-        public static final Angle kZeroPosition = null;
-        public static final Voltage kPeakReverseVoltage = null;
-        public static final Voltage kPeakForwardVoltage = null;
-        public static final double gearRatio = 0;
+        public static final Angle positionTolerance = Degrees.of(1);
+        public static final Angle kFowardSoftLimit = Degrees.of(123);
+        public static final Angle kBackwardSoftLimit = Degrees.of(-1);
+        public static final Angle kZeroPosition = Degrees.of(122);
+        public static final Voltage kPeakReverseVoltage = Volts.of(-12);
+        public static final Voltage kPeakForwardVoltage = Volts.of(12);
+        public static final double gearRatio = (25.0 / 1.0) * (36.0 / 24.0);
     }
 
      public class LookupTables {

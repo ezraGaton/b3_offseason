@@ -11,10 +11,13 @@ import org.supurdueper.robotOffseason.state.Driver;
 import org.supurdueper.robotOffseason.state.RobotStates;
 
 import org.supurdueper.robotOffseason.subsystems.Indexer;
+import org.supurdueper.robotOffseason.subsystems.IntakePivot;
 import org.supurdueper.robotOffseason.subsystems.Rollerfloor;
 import org.supurdueper.robotOffseason.subsystems.Shooter;
+import org.supurdueper.robotOffseason.subsystems.ShooterHood;
 import org.supurdueper.robotOffseason.subsystems.Vision;
-import org.supurdueper.robotOffseason.subsystems.intake;
+import org.supurdueper.robotOffseason.subsystems.intakeBack;
+import org.supurdueper.robotOffseason.subsystems.intakeFront;
 import org.supurdueper.robotOffseason.subsystems.drive.Drivetrain;
 import org.supurdueper.robotOffseason.subsystems.drive.generated.TunerConstants;
 
@@ -50,7 +53,16 @@ public class RobotContainer {
    private static Shooter shooter;
 
   @Getter
-    private static intake intake;
+    private static intakeFront intakeFront;
+
+  @Getter
+    private static intakeBack intakeBack;
+
+  @Getter
+    private static IntakePivot intakePivot;
+
+  @Getter
+    private static ShooterHood shooterHood;
 
 
   // The robot's subsystems and commands are defined here...
@@ -66,11 +78,14 @@ public class RobotContainer {
     driver = new Driver(0);
     drivetrain = TunerConstants.createDrivetrain();
  //   intake = new intake();
-    testController = new Driver(1);
+    testController = new Driver(2);
     rollerfloor = new Rollerfloor();
     indexer = new Indexer();
     shooter = new Shooter();
-    intake = new intake();
+    intakeFront = new intakeFront();
+    intakeBack = new intakeBack();
+    intakePivot = new IntakePivot();
+    shooterHood = new ShooterHood();
 
     configureBindings();
   }
