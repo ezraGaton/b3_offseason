@@ -14,7 +14,6 @@ import org.supurdueper.robotOffseason.utils.FieldConstants;
 
 import com.ctre.phoenix6.HootAutoReplay;
 
-
 import choreo.auto.AutoChooser;
 import choreo.auto.AutoFactory;
 import dev.doglog.DogLog;
@@ -58,6 +57,19 @@ public class Robot extends SupurdueperRobot {
     autoFactory = RobotContainer.getDrivetrain().createAutoFactory();
     autoRoutines = new AutoRoutines(autoFactory);
     autoTimeout = new LoggedTunableNumber("Auto Timeout", 0.0);
+  
+  
+    autoChooser.addRoutine("Left 1 Run", autoRoutines::leftOneRun);
+    autoChooser.addRoutine("Right 1 Run", autoRoutines::rightOneRun);
+    autoChooser.addRoutine("Right Full Run", autoRoutines::rightFullRun);
+    autoChooser.addRoutine("Left Full Run", autoRoutines::leftFullRun);
+    autoChooser.addRoutine("Left Wall Run", autoRoutines::leftWallRun);
+    autoChooser.addRoutine("Right Wall Run", autoRoutines::rightWallRun);
+    autoChooser.addRoutine("Right ONLY Wall Run", autoRoutines::rightOnlyWall);
+    autoChooser.addRoutine("Left ONLY Wall Run", autoRoutines::leftOnlyWall);
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putNumber("Auto Timeout", autoTimeout.get());  
   }
 
   /**
@@ -69,9 +81,15 @@ public class Robot extends SupurdueperRobot {
    */
   @Override
   public void robotPeriodic() {
-        Threads.setCurrentThreadPriority(true,1);
         CommandScheduler.getInstance().run();
-
+        m_timeAndJoystickReplay.update();
+        Threads.setCurrentThreadPriority(true, 1);
+        double startTime = Timer.getFPGATimestamp();
+        CommandScheduler.getInstance().run();
+        double endTime = Timer.getFPGATimestamp();
+        Threads.setCurrentThreadPriority(false, 0);
+        DogLog.log("Loop Time", endTime - startTime);
+        RobotStates.log();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -90,7 +108,6 @@ public class Robot extends SupurdueperRobot {
     Vision.setAprilTagFilter();
     Vision.updateIMUMode();
     autoChooser.selectedCommandScheduler().schedule();
-    
   }
 
   /** This function is called periodically during autonomous. */
@@ -104,6 +121,10 @@ public class Robot extends SupurdueperRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     resetCommandsAndButtons();
+    Vision.setEnabled();
+    Vision.setAprilTagFilter();
+    Vision.updateIMUMode();
+
   }
 
   /** This function is called periodically during operator control. */
@@ -144,6 +165,7 @@ public class Robot extends SupurdueperRobot {
                 DogLog.log("Git/GitDirty", "Unknown");
                 break;
   }
+  FieldConstants.AprilTagLayoutType.OFFICIAL.getLayout().getTagPose(31);
   resetCommandsAndButtons();
 }
 

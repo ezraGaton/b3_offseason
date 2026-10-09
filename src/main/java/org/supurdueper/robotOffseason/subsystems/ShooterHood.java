@@ -9,10 +9,12 @@ import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.Volts;
 
+import org.supurdueper.lib.LoggedTunableNumber;
 import org.supurdueper.lib.subsystems.PositionSubsystem;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.Constants.LookupTables;
 import org.supurdueper.robotOffseason.Constants.ShooterHoodConstants;
 import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.RobotContainer;
@@ -25,6 +27,7 @@ import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.configs.VoltageConfigs;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 
 import dev.doglog.DogLog;
@@ -36,6 +39,9 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 
 public class ShooterHood extends PositionSubsystem implements SupurdueperSubsystem {
+  
+  private PositionVoltage noMagicMotion = new PositionVoltage(0);
+  private final LoggedTunableNumber shooterAngle;
   /** Creates a new ShooterHood. */
   public ShooterHood() {
       config = config.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(ShooterHoodConstants.gearRatio))
@@ -45,12 +51,32 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
         configureMotors();
         Robot.add(this);
         motor.setPosition(ShooterHoodConstants.kZeroPosition);
+        shooterAngle = new LoggedTunableNumber("Shot Tuning/Angle (Deg)");
+        shooterAngle.initDefault(22);
   }
+
+  @Override
+  protected void setPosition(Angle position){
+    motor.setControl(noMagicMotion.withPosition(position));
+  }
+
+  @Override
+  protected void setPosition(double position){
+    motor.setControl(noMagicMotion.withPosition(position));
+  }
+
+  public Command zero() {
+    return run(() -> motor.setControl(voltageRequest.withOutput(-3).withIgnoreSoftwareLimits(true)))
+            .until(() -> motor.getStatorCurrent().getValueAsDouble() > 40.0)
+            .andThen(runOnce(
+                    () -> motor.setControl(voltageRequest.withOutput(0).withIgnoreSoftwareLimits(false))))
+            .andThen(runOnce(() -> motor.setPosition(ShooterHoodConstants.kZeroPosition)));
+    }
 
   @Override
   public void periodic() {
     super.periodic();
-    DogLog.log("ShooterHoodPivot/Position (Deg)", getPosition().in(Degrees));
+    DogLog.log("ShooterHood/Position (Deg)", getPosition().in(Degrees));
     DogLog.log("ShooterHood/Target Position (Deg)", getSetpoint().in(Degrees));
     DogLog.log("ShooterHood/Current", motor.getTorqueCurrent().getValue().in(Amps));
       if (Constants.tuningMode) {
@@ -61,6 +87,19 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
                             .in(Meters));
         }
   }
+    
+  public Angle getShotAngle() {
+        if (Constants.tuningMode) {
+            return Degrees.of(shooterAngle.get());
+        } else if (RobotStates.actionSetShot.getAsBoolean()){
+            return Constants.ShooterHoodConstants.kSetShotAngle;
+        } else {
+            double distanceToGoalMeters = FieldCalculations.distanceToGoal(
+                            RobotContainer.getDrivetrain().getState().Pose)
+                    .in(Meters);
+            return Degrees.of(LookupTables.distanceToShooterAngle.get(distanceToGoalMeters));
+        }
+    }
 
   @Override
   public Slot0Configs pidGains() {
@@ -128,18 +167,31 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
 
   @Override
   public boolean brakeMode() {
-    return false;
+    return true;
     
   }
 
 
   @Override
   public void bindCommands() {
-    //RobotStates.testController.leftStickY.whileTrue(
-    //runEnd(() -> runVoltage(Volts.of(6 * RobotStates.testController.getDriveFwdPositive())), this::stop));
-    RobotStates.testController.B.whileTrue(goToPosition(()->Degrees.of(20)));
-    RobotStates.testController.A.whileTrue(goToPosition(()->Degrees.of(23)));
-    RobotStates.testController.X.whileTrue(goToPosition(()->Degrees.of(26)));
+        RobotStates.teleop.onTrue(goToPosition(() -> Constants.ShooterHoodConstants.kBackwardSoftLimit));
+        RobotStates.actionAim
+                .or(RobotStates.actionShoot)
+                .or(RobotStates.auto_aim)
+                .or(RobotStates.auto_shoot)
+                .whileTrue(goToPosition(this::getShotAngle));
+        RobotStates.actionSetShot.onTrue(goToPosition(() -> Constants.ShooterHoodConstants.kSetShotAngle));
+        RobotStates.auto_drop_hood.onTrue(goToPosition(() -> Constants.ShooterHoodConstants.kBackwardSoftLimit));
+        RobotStates.actionAim
+                .or(RobotStates.actionShoot)
+                .or(RobotStates.auto_aim)
+                .or(RobotStates.auto_shoot)
+                .or(RobotStates.actionSetShot)
+                .onFalse(goToPosition(() -> (Constants.ShooterHoodConstants.kBackwardSoftLimit)));
+        RobotStates.driver.downDpad.onTrue(zero());
+        RobotStates.testController.leftStickY.whileTrue(
+                runEnd(() -> runVoltage(Volts.of(6 * RobotStates.testController.getDriveFwdPositive())), this::stop));
+
 
   }
 }

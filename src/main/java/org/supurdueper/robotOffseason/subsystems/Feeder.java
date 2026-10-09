@@ -4,83 +4,160 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
-import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
-import org.supurdueper.lib.subsystems.VelocitySubsystem;
-import org.supurdueper.robotOffseason.CanId;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.Volts;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
-
+import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import lombok.Getter;
+import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
+import org.supurdueper.lib.subsystems.VelocitySubsystem;
+import org.supurdueper.robotOffseason.CanId;
+import org.supurdueper.robotOffseason.Constants.FeederConstants;
+import org.supurdueper.robotOffseason.Robot;
+import org.supurdueper.robotOffseason.RobotContainer;
+import org.supurdueper.robotOffseason.state.RobotStates;
 
 public class Feeder extends VelocitySubsystem implements SupurdueperSubsystem {
-  /** Creates a new Feeder. */
-  public Feeder() {}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    /** Creates a new Feeder. */
+    public enum FeedState {
+        feed(FeederConstants.feedVelocity),
+        idle(FeederConstants.idleVelocity),
+        purge(FeederConstants.purgeVelocity),
+        stop(RPM.of(0));
 
-  @Override
-  public void bindCommands() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'bindCommands'");
-  }
+        public AngularVelocity velocity;
 
-  @Override
-  public Slot0Configs pidGains() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'pidGains'");
-  }
+        FeedState(AngularVelocity velocity) {
+            this.velocity = velocity;
+        }
+    }
 
-  @Override
-  public AngularVelocity velocityTolerance() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'velocityTolerance'");
-  }
+    @Getter
+    private FeedState feedState;
 
-  @Override
-  public SysIdRoutine sysIdConfig() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'sysIdConfig'");
-  }
+    public Feeder() {
+        config.TorqueCurrent.PeakForwardTorqueCurrent = FeederConstants.kMaxAmps;
+        config.TorqueCurrent.PeakReverseTorqueCurrent = 0;
+        config.MotorOutput.PeakForwardDutyCycle = 1.0;
+        config.MotorOutput.PeakForwardDutyCycle = 0.0;
+        config.Feedback.SensorToMechanismRatio = FeederConstants.kGearRatio;
+        configureMotors();
+        Robot.add(this);
+        feedState = FeedState.stop;
+    }
 
-  @Override
-  public CanId canIdLeader() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdLeader'");
-  }
+    @Override
+    public void periodic() {
+        super.periodic();
+        if (feedState.equals(FeedState.stop)) {
+            run(() -> stop());
+        } else {
+            setVelocity(feedState.velocity);
+        }
+        DogLog.log("Feeder/RPM", getVelocity().in(RPM));
+        DogLog.log("Feeder/Target RPM", getSetpoint().in(RPM));
+        DogLog.log("Feeder/State", feedState.name());
+        DogLog.log("Feeder/At Velocity", isAtVelocityTrigger().getAsBoolean());
+        DogLog.log("Feeder/Current", motor.getTorqueCurrent().getValue().in(Amps));
+    }
 
-  @Override
-  public CanId canIdFollower() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'canIdFollower'");
-  }
+    public void test() {
+        runVoltage(Volts.of(2));
+    }
 
-  @Override
-  public boolean followerInverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'followerInverted'");
-  }
+    @Override
+    public void bindCommands() {
+        RobotStates.actionAim
+                .or(RobotStates.actionShoot)
+                .or(RobotStates.auto_shoot)
+                .or(RobotStates.actionSetShot)
+                .onTrue(setState(FeedState.feed));
+        RobotStates.actionAim
+                .or(RobotStates.auto_shoot)
+                .or(RobotStates.actionShoot)
+                .or(RobotStates.actionSetShot)
+                .onFalse(setState(FeedState.idle));
+        RobotStates.testController.B.onTrue(goToVelocity(() -> RPM.of(500)));
+        RobotStates.testController.X.onTrue(goToVelocity(() -> RPM.of(1000)));
+        RobotStates.testController.Y.onTrue(goToVelocity(() -> RPM.of(2000)));
+        RobotStates.testController.A.onTrue(run(this::stop));
+    }
 
-  @Override
-  public CurrentLimitsConfigs currentLimits() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'currentLimits'");
-  }
+    public Command setState(FeedState velocity) {
+        return runOnce(() -> feedState = velocity);
+    }
 
-  @Override
-  public boolean inverted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'inverted'");
-  }
+    public boolean atFeed() {
+        return feedState.equals(FeedState.feed);
+    }
 
-  @Override
-  public boolean brakeMode() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'brakeMode'");
-  }
+    public boolean atPurge() {
+        return feedState.equals(FeedState.purge);
+    }
+
+    public boolean atIdle() {
+        return feedState.equals(FeedState.idle);
+    }
+
+    public boolean atStop() {
+        return feedState.equals(FeedState.stop);
+    }
+
+    @Override
+    public Slot0Configs pidGains() {
+        return new Slot0Configs()
+                .withKP(FeederConstants.kP)
+                .withKI(0)
+                .withKD(0)
+                .withKS(FeederConstants.kS)
+                .withKV(FeederConstants.kV)
+                .withKA(0);
+    }
+
+    @Override
+    public AngularVelocity velocityTolerance() {
+        return FeederConstants.velocityTolerance;
+    }
+
+    @Override
+    public SysIdRoutine sysIdConfig() {
+        return null;
+    }
+
+    @Override
+    public CanId canIdLeader() {
+        return CanId.FEEDER_ONE;
+    }
+
+    @Override
+    public CanId canIdFollower() {
+        return CanId.FEEDER_TWO;
+    }
+
+    @Override
+    public boolean followerInverted() {
+        return true;
+    }
+
+    @Override
+    public CurrentLimitsConfigs currentLimits() {
+        return FeederConstants.kCurrentLimit;
+    }
+
+    @Override
+    public boolean inverted() {
+        return false;
+    }
+
+    @Override
+    public boolean brakeMode() {
+        return false;
+    }
 }

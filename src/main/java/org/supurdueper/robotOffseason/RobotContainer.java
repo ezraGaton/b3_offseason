@@ -15,6 +15,7 @@ import org.supurdueper.robotOffseason.subsystems.IntakePivot;
 import org.supurdueper.robotOffseason.subsystems.Rollerfloor;
 import org.supurdueper.robotOffseason.subsystems.Shooter;
 import org.supurdueper.robotOffseason.subsystems.ShooterHood;
+import org.supurdueper.robotOffseason.subsystems.Feeder;
 import org.supurdueper.robotOffseason.subsystems.Vision;
 import org.supurdueper.robotOffseason.subsystems.intakeBack;
 import org.supurdueper.robotOffseason.subsystems.intakeFront;
@@ -53,6 +54,9 @@ public class RobotContainer {
    private static Shooter shooter;
 
   @Getter
+    private static Feeder feeder;
+
+  @Getter
     private static intakeFront intakeFront;
 
   @Getter
@@ -82,6 +86,7 @@ public class RobotContainer {
     rollerfloor = new Rollerfloor();
     indexer = new Indexer();
     shooter = new Shooter();
+    feeder = new Feeder();
     intakeFront = new intakeFront();
     intakeBack = new intakeBack();
     intakePivot = new IntakePivot();

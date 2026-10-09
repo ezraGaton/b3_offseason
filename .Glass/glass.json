@@ -3,9 +3,6 @@
     "Persistent Values": {
       "open": false
     },
-    "Retained Values": {
-      "open": false
-    },
     "transitory": {
       "LiveWindow": {
         ".status": {
@@ -15,8 +12,7 @@
       "Robot": {
         "IntakePivot": {
           "open": true
-        },
-        "open": true
+        }
       },
       "Shuffleboard": {
         ".metadata": {
@@ -24,6 +20,12 @@
         }
       },
       "SmartDashboard": {
+        "Auto Chooser": {
+          "open": true,
+          "string[]##v_/SmartDashboard/Auto Chooser/options": {
+            "open": true
+          }
+        },
         "Tuning": {
           "Indexer": {
             "open": true
@@ -37,15 +39,29 @@
       "/FMSInfo": "FMSInfo",
       "/Pose": "Field2d",
       "/SmartDashboard/Alerts": "Alerts",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Choreo Alerts": "Alerts",
       "/SmartDashboard/Module 0": "Mechanism2d",
       "/SmartDashboard/Module 1": "Mechanism2d",
       "/SmartDashboard/Module 2": "Mechanism2d",
       "/SmartDashboard/Module 3": "Mechanism2d"
+    },
+    "windows": {
+      "/Pose": {
+        "bottom": 649,
+        "builtin": "2021 Infinite Recharge",
+        "height": 8.210550308227539,
+        "left": 127,
+        "right": 1323,
+        "top": 34,
+        "width": 15.982950210571289
+      },
+      "/SmartDashboard/Auto Chooser": {
+        "window": {
+          "visible": true
+        }
+      }
     }
-  },
-  "NetworkTables Info": {
-    "visible": true
   },
   "NetworkTables Settings": {
     "mode": "Client (NT4)",

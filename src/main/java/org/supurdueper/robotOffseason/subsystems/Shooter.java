@@ -4,28 +4,36 @@
 
 package org.supurdueper.robotOffseason.subsystems;
 
-import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Amps;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.Volts;
 
 import org.supurdueper.lib.Alert;
+import org.supurdueper.lib.LoggedTunableNumber;
 import org.supurdueper.lib.TalonFXFactory;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.lib.subsystems.VelocitySubsystem;
 import org.supurdueper.robotOffseason.CanId;
 import org.supurdueper.robotOffseason.Constants;
+import org.supurdueper.robotOffseason.Constants.LookupTables;
 import org.supurdueper.robotOffseason.Constants.ShooterConstants;
 import org.supurdueper.robotOffseason.Robot;
+import org.supurdueper.robotOffseason.RobotContainer;
 import org.supurdueper.robotOffseason.state.RobotStates;
+import org.supurdueper.robotOffseason.utils.FieldCalculations;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
+
+  private final LoggedTunableNumber shooterVelocity;
+
   /** Creates a new Shooter. */
   public Shooter() {
     config.Feedback.SensorToMechanismRatio = ShooterConstants.shooterGearRatio;
@@ -40,31 +48,48 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
     TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_THREE, motor, true);
     TalonFXFactory.createPermanentFollowerTalon(CanId.SHOOTER_FOUR, motor, true);
     Robot.add(this);
+    shooterVelocity = new LoggedTunableNumber("Shot Tuning/Speed (RPM)");
+    shooterVelocity.initDefault(1500);
 
   }
 
-  
+
+  protected boolean isAtVelocity() {
+    if (getVelocity().lt(RPM.of(1600))) return false;
+    return super.isAtVelocity();
+  }
 
   @Override
   public void periodic() {
     super.periodic();
+    DogLog.log("Shooter/Current RPM", getVelocity().in(RPM));
+    DogLog.log("Shooter/Target RPM", getSetpoint().in(RPM));
+    DogLog.log("Shooter/At Velocity", isAtVelocity());
+    DogLog.log("Shooter/Current", motor.getTorqueCurrent().getValue().in(Amps));
+    DogLog.log("MotorRPM", motor.getRotorVelocity().getValue().in(RPM));
+ 
+  }
+
+  private AngularVelocity getShotVelocity() {
+    if (Constants.tuningMode) {
+        return RPM.of(shooterVelocity.get());
+    } else if (RobotStates.actionSetShot.getAsBoolean()){
+            return Constants.ShooterConstants.kShootRPM;
+    } else {
+        double distanceToGoalMeters = FieldCalculations.distanceToGoal(
+                        RobotContainer.getDrivetrain().getState().Pose)
+                .in(Meters);
+        return RPM.of(LookupTables.distanceToShooterRPM.get(distanceToGoalMeters));
+    }
   }
 
   @Override
   public void bindCommands() {
-    RobotStates.actionShoot.whileTrue(shoot());
-  }
-
-  public Command shoot(){
-    return Commands.runEnd(this::runShoot,this::runIdle);
-  }
-
-  public void runShoot(){
-    setVelocity(Constants.ShooterConstants.kShootSpeed);
-  }
-
-  public void runIdle(){
-    setVelocity(RotationsPerSecond.of(0));
+    RobotStates.actionAim.or(RobotStates.actionShoot).onTrue(goToVelocity(this::getShotVelocity));
+    RobotStates.auto_aim.or(RobotStates.auto_shoot).onTrue(goToVelocity(this::getShotVelocity));
+    RobotStates.actionAim.or(RobotStates.actionShoot).or(RobotStates.actionSetShot).onFalse(goToVelocity(() -> ShooterConstants.kIdleRPM));
+    RobotStates.auto_rev.onTrue(goToVelocity(() -> ShooterConstants.kRevRpm));
+    RobotStates.actionSetShot.whileTrue(goToVelocity(() -> ShooterConstants.kShootRPM));
   }
 
   @Override
