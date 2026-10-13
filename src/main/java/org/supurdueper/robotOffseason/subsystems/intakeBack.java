@@ -101,6 +101,8 @@ public class intakeBack extends VelocitySubsystem implements SupurdueperSubsyste
   //RobotStates.testController.A.onTrue(run(this::stop));
   RobotStates.actionIntake.onTrue(goToVelocity(()-> RotationsPerSecond.of(40)));
   RobotStates.actionIntake.onFalse(goToVelocity(()-> RotationsPerSecond.of(0)));
+  RobotStates.actionShoot.onTrue(goToVelocity(()-> RotationsPerSecond.of(20)));
+  RobotStates.actionShoot.onFalse(goToVelocity(()-> RotationsPerSecond.of(0)));
 
   }
 }

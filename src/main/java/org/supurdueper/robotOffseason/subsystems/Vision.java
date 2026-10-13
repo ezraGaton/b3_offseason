@@ -10,6 +10,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.supurdueper.lib.LimelightHelpers;
+import org.supurdueper.lib.utils.AllianceFlip;
 import org.supurdueper.lib.subsystems.SupurdueperSubsystem;
 import org.supurdueper.robotOffseason.Robot;
 import org.supurdueper.robotOffseason.RobotContainer;
@@ -18,8 +19,8 @@ import org.supurdueper.robotOffseason.subsystems.drive.Drivetrain;
 public class Vision extends SubsystemBase implements SupurdueperSubsystem {
 
     public static final String backLimelightName = "limelight-b";
-    public static final String rightLimelightName = "limelight-r";
-    public static final String leftLimelightName = "limelight-l";
+    //public static final String rightLimelightName = "limelight-r";
+    //public static final String leftLimelightName = "limelight-l";
 
     public Vision() {
         Robot.add(this);
@@ -29,6 +30,7 @@ public class Vision extends SubsystemBase implements SupurdueperSubsystem {
     public void periodic() {
         Drivetrain drivetrain = RobotContainer.getDrivetrain();
         SwerveDriveState state = drivetrain.getState();
+        LimelightHelpers.SetRobotOrientation(backLimelightName, state.Pose.getRotation().getDegrees()+180, 0, 0, 0, 0, 0);
         updatePose3dAprilTag(backLimelightName, drivetrain, state);
         // updatePose3dAprilTag(rightLimelightName, drivetrain, state);
         // updatePose3dAprilTag(leftLimelightName, drivetrain, state);
@@ -61,31 +63,32 @@ public class Vision extends SubsystemBase implements SupurdueperSubsystem {
             drivetrain.addVisionMeasurement(mt2.pose, mt2.timestampSeconds);
         }
         DogLog.log("Vision/" + limelightName + " Pose (mt2)", mt2.pose);
+        DogLog.log("Vision/" + limelightName + " Should Update", shouldUpdate);
     }
 
     public static void updateIMUMode() {
-        LimelightHelpers.SetIMUMode(rightLimelightName, 0);
+        //LimelightHelpers.SetIMUMode(rightLimelightName, 0);
         LimelightHelpers.SetIMUMode(backLimelightName, 0);
-        LimelightHelpers.SetIMUMode(leftLimelightName, 0);
+        //LimelightHelpers.SetIMUMode(leftLimelightName, 0);
     }
 
     public static void setDisabled() {
-        LimelightHelpers.SetThrottle(rightLimelightName, 150);
+        //LimelightHelpers.SetThrottle(rightLimelightName, 150);
         LimelightHelpers.SetThrottle(backLimelightName, 150);
-        LimelightHelpers.SetThrottle(leftLimelightName, 150);
+        //LimelightHelpers.SetThrottle(leftLimelightName, 150);
     }
 
     public static void setEnabled() {
-        LimelightHelpers.SetThrottle(rightLimelightName, 0);
+        //LimelightHelpers.SetThrottle(rightLimelightName, 0);
         LimelightHelpers.SetThrottle(backLimelightName, 0);
-        LimelightHelpers.SetThrottle(leftLimelightName, 0);
+        //LimelightHelpers.SetThrottle(leftLimelightName, 0);
     }
 
     public static void setAprilTagFilter() {
         int[] ids = {2, 3, 4, 5, 8, 9, 10, 11, 13, 14, 15, 16, 18, 19, 20, 21, 24, 25, 26, 27, 29, 30, 31, 32};
         LimelightHelpers.SetFiducialIDFiltersOverride(backLimelightName, ids);
-        LimelightHelpers.SetFiducialIDFiltersOverride(rightLimelightName, ids);
-        LimelightHelpers.SetFiducialIDFiltersOverride(leftLimelightName, ids);
+        //LimelightHelpers.SetFiducialIDFiltersOverride(rightLimelightName, ids);
+        //LimelightHelpers.SetFiducialIDFiltersOverride(leftLimelightName, ids);
     }
 
     @Override

@@ -66,7 +66,9 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
   public void bindCommands() {
    // RobotStates.testController.leftStickY.whileTrue(
                 // runEnd(() -> runVoltage(Volts.of(6 * RobotStates.testController.getDriveFwdPositive())), this::stop));
-
+    RobotStates.actionIntake.onTrue(goToPosition(() -> Constants.IntakePivotConstants.kIntakePosition));
+    RobotStates.actionShoot.onTrue(goToPosition(() -> Constants.IntakePivotConstants.kShootPosition)).onFalse(goToPosition(() -> Constants.IntakePivotConstants.kIntakePosition));
+  
   }
 
 
@@ -88,7 +90,8 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
     .withKS(Constants.IntakePivotConstants.kS)
     .withKV(Constants.IntakePivotConstants.kV)
     .withKA(Constants.IntakePivotConstants.kA)
-    .withKG(Constants.IntakePivotConstants.kG);
+    .withKG(Constants.IntakePivotConstants.kG)
+    .withKD(Constants.IntakePivotConstants.kD);
   }
 
   @Override

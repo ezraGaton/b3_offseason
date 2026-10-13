@@ -208,19 +208,22 @@ public final class Constants {
         public static final CurrentLimitsConfigs kCurrentLimits = new CurrentLimitsConfigs()
         .withStatorCurrentLimit(kMaxAmps)
         .withStatorCurrentLimitEnable(true);
-        public static final double kP = 0;
+        public static final double kP = 3000;
         public static final double kI = 0;
-        public static final double kS = 0;
+        public static final double kD = 250;
+        public static final double kS = 5;
         public static final double kV = 0;
         public static final double kA = 0;
-        public static final double kG = 0;
+        public static final double kG = 14;
         public static final Angle positionTolerance = Degrees.of(1);
         public static final Angle kFowardSoftLimit = Degrees.of(123);
         public static final Angle kBackwardSoftLimit = Degrees.of(-1);
         public static final Angle kZeroPosition = Degrees.of(122);
-        public static final Voltage kPeakReverseVoltage = Volts.of(-12);
+        public static final Voltage kPeakReverseVoltage = Volts.of(-6);
         public static final Voltage kPeakForwardVoltage = Volts.of(12);
-        public static final double gearRatio = (25.0 / 1.0) * (36.0 / 24.0);
+        public static final double gearRatio = (25.0 / 1.0) * (22.0 / 10.0);
+        public static final Angle kShootPosition = Degrees.of(35);
+        public static final Angle kIntakePosition = Degrees.of(0) ;
     }
 
      public class LookupTables {

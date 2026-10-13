@@ -12,7 +12,11 @@
       "Robot": {
         "IntakePivot": {
           "open": true
-        }
+        },
+        "Shooter": {
+          "open": true
+        },
+        "open": true
       },
       "Shuffleboard": {
         ".metadata": {
@@ -55,11 +59,6 @@
         "right": 1323,
         "top": 34,
         "width": 15.982950210571289
-      },
-      "/SmartDashboard/Auto Chooser": {
-        "window": {
-          "visible": true
-        }
       }
     }
   },
