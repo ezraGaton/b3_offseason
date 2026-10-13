@@ -88,8 +88,9 @@ public class Shooter extends VelocitySubsystem implements SupurdueperSubsystem {
     RobotStates.actionAim.or(RobotStates.actionShoot).onTrue(goToVelocity(this::getShotVelocity));
     RobotStates.auto_aim.or(RobotStates.auto_shoot).onTrue(goToVelocity(this::getShotVelocity));
     RobotStates.actionAim.or(RobotStates.actionShoot).or(RobotStates.actionSetShot).onFalse(goToVelocity(() -> ShooterConstants.kIdleRPM));
+    RobotStates.driver.Y.onTrue(goToVelocity(()->RPM.of(shooterVelocity.getAsDouble()))).onFalse(goToVelocity(() -> Constants.ShooterConstants.kIdleRPM));
     RobotStates.auto_rev.onTrue(goToVelocity(() -> ShooterConstants.kRevRpm));
-    RobotStates.actionSetShot.whileTrue(goToVelocity(() -> ShooterConstants.kShootRPM));
+    //RobotStates.actionSetShot.whileTrue(goToVelocity(() -> ShooterConstants.kShootRPM));
   }
 
   @Override

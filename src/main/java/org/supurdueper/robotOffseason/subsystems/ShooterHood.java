@@ -180,7 +180,8 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
                 .or(RobotStates.auto_aim)
                 .or(RobotStates.auto_shoot)
                 .whileTrue(goToPosition(this::getShotAngle));
-        RobotStates.actionSetShot.onTrue(goToPosition(() -> Constants.ShooterHoodConstants.kSetShotAngle));
+        //RobotStates.actionSetShot.onTrue(goToPosition(() -> Constants.ShooterHoodConstants.kSetShotAngle));
+        RobotStates.driver.Y.onTrue(goToPosition(this::getShotAngle)).onFalse(goToPosition(() -> Constants.ShooterHoodConstants.kBackwardSoftLimit));
         RobotStates.auto_drop_hood.onTrue(goToPosition(() -> Constants.ShooterHoodConstants.kBackwardSoftLimit));
         RobotStates.actionAim
                 .or(RobotStates.actionShoot)

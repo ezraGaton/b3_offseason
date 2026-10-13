@@ -31,7 +31,7 @@ import org.supurdueper.lib.utils.ExpCurve;
 public final class Constants {
     public static final double loopPeriodSecs = 0.02;
     public static boolean tuningMode = false;
-    public static boolean publishToNT = true;
+        public static boolean publishToNT = true;
     public static CANBus canivoreBus = new CANBus("canivore");
     public static CANBus rioBus = new CANBus("rio");
 
@@ -243,32 +243,32 @@ public final class Constants {
             addPointToDistanceToShooterAngle(1.75, 19.0);
             addPointToDistanceToShooterAngle(2.0, 19.0);
             addPointToDistanceToShooterAngle(2.25, 19.0);
-            addPointToDistanceToShooterAngle(2.5, 19.0);
-            addPointToDistanceToShooterAngle(2.75, 19.0);
-            addPointToDistanceToShooterAngle(3.0, 19.0);
-            addPointToDistanceToShooterAngle(3.25, 19.0);
-            addPointToDistanceToShooterAngle(3.5, 19.0);
+            addPointToDistanceToShooterAngle(2.5, 19.5);
+            addPointToDistanceToShooterAngle(2.75, 20);
+            addPointToDistanceToShooterAngle(3.0, 20.0);
+            addPointToDistanceToShooterAngle(3.25, 20.5);
+            addPointToDistanceToShooterAngle(3.5, 20.5);
             addPointToDistanceToShooterAngle(3.75, 20.5);
-            addPointToDistanceToShooterAngle(4.0, 22.0);
-            addPointToDistanceToShooterAngle(4.25, 22.0);
+            addPointToDistanceToShooterAngle(4.0, 21);
+            addPointToDistanceToShooterAngle(4.25, 21);
             addPointToDistanceToShooterAngle(4.5, 22.0);
             addPointToDistanceToShooterAngle(4.75, 22.0);
             addPointToDistanceToShooterAngle(5, 24.0);
 
-            addPointToDistanceToShooterRPM(1.75, 1825);
-            addPointToDistanceToShooterRPM(2.0, 1925);
-            addPointToDistanceToShooterRPM(2.25, 2000);
-            addPointToDistanceToShooterRPM(2.5, 2050);
-            addPointToDistanceToShooterRPM(2.75, 2125);
-            addPointToDistanceToShooterRPM(3.0, 2195);
-            addPointToDistanceToShooterRPM(3.25, 2275);
-            addPointToDistanceToShooterRPM(3.5, 2345);
-            addPointToDistanceToShooterRPM(3.75, 2405);
-            addPointToDistanceToShooterRPM(4, 2485);
-            addPointToDistanceToShooterRPM(4.25, 2625);
-            addPointToDistanceToShooterRPM(4.5, 2675);
-            addPointToDistanceToShooterRPM(4.75, 2755);
-            addPointToDistanceToShooterRPM(5, 2980);
+            addPointToDistanceToShooterRPM(1.75, 1550);
+            addPointToDistanceToShooterRPM(2.0, 1650);
+            addPointToDistanceToShooterRPM(2.25, 1750);
+            addPointToDistanceToShooterRPM(2.5, 1850);
+            addPointToDistanceToShooterRPM(2.75, 1900);
+            addPointToDistanceToShooterRPM(3.0, 1975);
+            addPointToDistanceToShooterRPM(3.25, 2050);
+            addPointToDistanceToShooterRPM(3.5, 2150);
+            addPointToDistanceToShooterRPM(3.75, 2225);
+            addPointToDistanceToShooterRPM(4, 2300);
+            addPointToDistanceToShooterRPM(4.25, 2425);
+            addPointToDistanceToShooterRPM(4.5, 2550);
+            addPointToDistanceToShooterRPM(4.75, 2700);
+            addPointToDistanceToShooterRPM(5, 2850);
         }
     }
 

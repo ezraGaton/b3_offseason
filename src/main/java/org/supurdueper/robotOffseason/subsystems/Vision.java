@@ -40,23 +40,23 @@ public class Vision extends SubsystemBase implements SupurdueperSubsystem {
         LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
         boolean shouldUpdate = true;
         if (Math.abs(state.Speeds.omegaRadiansPerSecond) > Units.degreesToRadians(360)) {
-            shouldUpdate = false;
+            //shouldUpdate = false;
         }
         if (mt2 == null) {
-            shouldUpdate = false;
+            //shouldUpdate = false;
             return;
         }
         if (mt2.tagCount == 0) {
-            shouldUpdate = false;
+            //shouldUpdate = false;
         }
         if (mt2.rawFiducials.length == 1) {
             double ambiguity = mt2.rawFiducials[0].ambiguity;
             if (ambiguity >= .7) {
-                shouldUpdate = false;
+                //shouldUpdate = false;
             }
         }
         if (Math.abs(mt2.pose.getRotation().minus(state.Pose.getRotation()).getDegrees()) > 30) { // 1 meter
-            shouldUpdate = false;
+            //shouldUpdate = false;
         }
         if (shouldUpdate) {
             drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(.6, .6, 9999999));
