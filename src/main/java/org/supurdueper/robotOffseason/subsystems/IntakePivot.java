@@ -66,11 +66,18 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
   public void bindCommands() {
    // RobotStates.testController.leftStickY.whileTrue(
                 // runEnd(() -> runVoltage(Volts.of(6 * RobotStates.testController.getDriveFwdPositive())), this::stop));
-    RobotStates.actionIntake.onTrue(goToPosition(() -> Constants.IntakePivotConstants.kIntakePosition));
-    RobotStates.actionShoot.onTrue(goToPosition(() -> Constants.IntakePivotConstants.kShootPosition)).onFalse(goToPosition(() -> Constants.IntakePivotConstants.kIntakePosition));
-  
+    RobotStates.actionIntake.or(RobotStates.auto_intake).onTrue(goToPosition(() -> Constants.IntakePivotConstants.kIntakePosition));
+    RobotStates.actionShoot.or(RobotStates.auto_shoot).onTrue(goToPosition(() -> Constants.IntakePivotConstants.kShootPosition)).onFalse(goToPosition(() -> Constants.IntakePivotConstants.kIntakePosition));
+    RobotStates.driver.downDpad.onTrue(zero()); 
   }
 
+  public Command zero() {
+    return run(() -> motor.setControl(voltageRequest.withOutput(-3).withIgnoreSoftwareLimits(true)))
+            .until(() -> motor.getStatorCurrent().getValueAsDouble() > 39.9)
+            .andThen(runOnce(
+                    () -> motor.setControl(voltageRequest.withOutput(0).withIgnoreSoftwareLimits(false))))
+            .andThen(runOnce(() -> motor.setPosition(Constants.IntakePivotConstants.kZeroBottomPosition)));
+    }
 
   public void goToDown() {
     setPosition(Degrees.of(90));

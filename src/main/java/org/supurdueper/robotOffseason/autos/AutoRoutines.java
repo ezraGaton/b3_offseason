@@ -30,7 +30,6 @@ public class AutoRoutines {
 
         routine.active()
                 .onTrue(overBump.resetOdometry()
-                        .andThen(() -> RobotStates.setAutoDropIntake(true))
                         .andThen(Commands.waitSeconds(SmartDashboard.getNumber("Auto Timeout", 0)))
                         .andThen(() -> RobotStates.setAutoIntake(true))
                         .andThen(overBump.cmd()));
@@ -59,7 +58,6 @@ public class AutoRoutines {
         routine.active()
                 .onTrue(overBumpOne
                         .resetOdometry()
-                        .andThen(() -> RobotStates.setAutoDropIntake(true))
                         .andThen(Commands.waitSeconds(SmartDashboard.getNumber("Auto Timeout", 0)))
                         .andThen(() -> RobotStates.setAutoIntake(true))
                         .andThen(overBumpOne.cmd()));

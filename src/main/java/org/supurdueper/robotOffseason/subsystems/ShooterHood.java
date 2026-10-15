@@ -190,8 +190,8 @@ public class ShooterHood extends PositionSubsystem implements SupurdueperSubsyst
                 .or(RobotStates.actionSetShot)
                 .onFalse(goToPosition(() -> (Constants.ShooterHoodConstants.kBackwardSoftLimit)));
         RobotStates.driver.downDpad.onTrue(zero());
-        RobotStates.testController.leftStickY.whileTrue(
-                runEnd(() -> runVoltage(Volts.of(6 * RobotStates.testController.getDriveFwdPositive())), this::stop));
+        //RobotStates.testController.leftStickY.whileTrue(
+                //runEnd(() -> runVoltage(Volts.of(6 * RobotStates.testController.getDriveFwdPositive())), this::stop));
 
 
   }

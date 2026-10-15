@@ -118,7 +118,7 @@ public class Indexer extends VelocitySubsystem implements SupurdueperSubsystem {
 
     @Override
   public void bindCommands() {
-    RobotStates.actionShoot.whileTrue(runIndexerShoot());
+    RobotStates.actionShoot.or(RobotStates.auto_shoot).whileTrue(runIndexerShoot());
    // RobotStates.testController.B.onTrue(goToVelocity(() -> RPM.of(500)));
    // RobotStates.testController.X.onTrue(goToVelocity(() -> RPM.of(1000)));
    // RobotStates.testController.Y.onTrue(goToVelocity(() -> RPM.of(2000)));

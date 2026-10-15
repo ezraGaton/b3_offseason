@@ -44,8 +44,8 @@ public class Rollerfloor extends VelocitySubsystem implements SupurdueperSubsyst
 
   @Override
   public void bindCommands() {
-    RobotStates.actionIntake.whileTrue(runIntake());
-    RobotStates.actionShoot.whileTrue(runShoot());
+    RobotStates.actionIntake.or(RobotStates.auto_intake).whileTrue(runIntake());
+    RobotStates.actionShoot.or(RobotStates.auto_shoot).whileTrue(runShoot());
   }
 
   public void runSlow(){
