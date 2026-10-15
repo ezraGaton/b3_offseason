@@ -30,7 +30,7 @@ public class Vision extends SubsystemBase implements SupurdueperSubsystem {
     public void periodic() {
         Drivetrain drivetrain = RobotContainer.getDrivetrain();
         SwerveDriveState state = drivetrain.getState();
-        LimelightHelpers.SetRobotOrientation(backLimelightName, state.Pose.getRotation().getDegrees()+180, 0, 0, 0, 0, 0);
+        LimelightHelpers.SetRobotOrientation(backLimelightName, state.Pose.getRotation().getDegrees(), 0, 0, 0, 0, 0);
         updatePose3dAprilTag(backLimelightName, drivetrain, state);
         // updatePose3dAprilTag(rightLimelightName, drivetrain, state);
         // updatePose3dAprilTag(leftLimelightName, drivetrain, state);
