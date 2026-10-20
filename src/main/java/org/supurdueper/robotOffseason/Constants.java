@@ -133,7 +133,7 @@ public final class Constants {
         public static final Angle kFowardSoftLimit = Degrees.of(29);
         public static final Angle kBackwardSoftLimit = Degrees.of(19);
         public static final Angle positionTolerance = Degrees.of(0.3);
-        public static final Angle kSetShotAngle = Degrees.of(20.5);
+        public static final Angle kSetShotAngle = Degrees.of(20);
 
     }
 
@@ -172,7 +172,7 @@ public final class Constants {
         .withStatorCurrentLimit(kMaxAmps)
         .withStatorCurrentLimitEnable(true);
         public static final AngularVelocity kTolerance = RotationsPerSecond.of(0);
-        public static final double kP = 2;
+        public static final double kP = 6;
         public static final double kI = 0;
         public static final double kS = 5;
         public static final double kV = 0.035;
@@ -180,7 +180,7 @@ public final class Constants {
         public static final double shooterGearRatio = 30.0/24.0;
         public static final AngularVelocity kIdleRPM = RPM.of(800);
         public static final AngularVelocity kVelocityTolerance = RPM.of(100);
-        public static final AngularVelocity kShootRPM = RPM.of(2400);
+        public static final AngularVelocity kShootRPM = RPM.of(1950);
         public static final AngularVelocity kRevRpm = RPM.of(1200);
         
     }
@@ -219,7 +219,7 @@ public final class Constants {
         public static final Angle kFowardSoftLimit = Degrees.of(123);
         public static final Angle kBackwardSoftLimit = Degrees.of(-1);
         public static final Angle kZeroPosition = Degrees.of(122);
-        public static final Angle kZeroBottomPosition = Degrees.of(0);
+        public static final Angle kZeroBottomPosition = Degrees.of(-3);
         public static final Voltage kPeakReverseVoltage = Volts.of(-6);
         public static final Voltage kPeakForwardVoltage = Volts.of(12);
         public static final double gearRatio = (25.0 / 1.0) * (22.0 / 10.0);
