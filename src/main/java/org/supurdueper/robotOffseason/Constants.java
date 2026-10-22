@@ -223,7 +223,7 @@ public final class Constants {
         public static final Voltage kPeakReverseVoltage = Volts.of(-6);
         public static final Voltage kPeakForwardVoltage = Volts.of(12);
         public static final double gearRatio = (25.0 / 1.0) * (22.0 / 10.0);
-        public static final Angle kShootPosition = Degrees.of(35);
+        public static final Angle kShootPosition = Degrees.of(45);
         public static final Angle kIntakePosition = Degrees.of(0);
     }
 

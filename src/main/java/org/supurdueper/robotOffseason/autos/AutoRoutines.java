@@ -19,6 +19,7 @@ public class AutoRoutines {
     private final String rightWallRun = "Right_Wall_Run";
     private final String rightOnlyWall = "Right_Only_Wall";
     private final String leftOnlyWall = "Left_Only_Wall";
+    private final String oneRunCenter = "Center_Auto";
 
     public AutoRoutines(AutoFactory factory) {
         m_factory = factory;
@@ -88,8 +89,8 @@ public class AutoRoutines {
                         (Commands.runOnce(() -> RobotStates.setAutoIntake(false))),
                         (Commands.runOnce(() -> RobotStates.setAutoAim(true))),
                         (Commands.waitSeconds(0.5)),
-                        (Commands.runOnce(() -> RobotStates.setAutoShoot(true))),
-                        (Commands.runOnce(() -> RobotStates.setAutoIntake(true)))));
+                        (Commands.runOnce(() -> RobotStates.setAutoShoot(true)))));
+                       // (Commands.runOnce(() -> RobotStates.setAutoIntake(true)))));
 
         return routine;
     }
@@ -101,6 +102,16 @@ public class AutoRoutines {
         final AutoTrajectory leftToHub = routine.trajectory(leftFullRun, 2);
         return oneRun(routine, leftOverBump, leftIntakeBalls, leftToHub);
     }
+
+    public AutoRoutine centerOneRun() {
+        AutoRoutine routine = m_factory.newRoutine("Center One Run");
+        final AutoTrajectory toDepot = routine.trajectory(oneRunCenter, 0);
+        final AutoTrajectory intakeBalls = routine.trajectory(oneRunCenter, 1);
+        final AutoTrajectory toHub = routine.trajectory(oneRunCenter, 2);
+        return oneRun(routine, toDepot, intakeBalls, toHub);
+    }
+
+
 
     public AutoRoutine rightOneRun() {
         AutoRoutine routine = m_factory.newRoutine("Right One Run");
@@ -217,4 +228,6 @@ public class AutoRoutines {
                 leftOnlyIntakeBallsTwo,
                 leftOnlyToHubTwo);
     }
+
+
 }

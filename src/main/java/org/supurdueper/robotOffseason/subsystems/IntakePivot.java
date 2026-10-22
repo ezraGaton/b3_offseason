@@ -72,7 +72,7 @@ public class IntakePivot extends PositionSubsystem implements SupurdueperSubsyst
   }
 
   public Command zero() {
-    return run(() -> motor.setControl(voltageRequest.withOutput(-3).withIgnoreSoftwareLimits(true)))
+    return run(() -> motor.setControl(voltageRequest.withOutput(-2).withIgnoreSoftwareLimits(true)))
             .until(() -> motor.getStatorCurrent().getValueAsDouble() > 39.9)
             .andThen(runOnce(
                     () -> motor.setControl(voltageRequest.withOutput(0).withIgnoreSoftwareLimits(false))))
